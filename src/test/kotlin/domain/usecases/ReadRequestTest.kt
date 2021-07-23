@@ -1,16 +1,22 @@
 package domain.usecases
 
+import com.google.gson.GsonBuilder
+import core.LocalDateTimeHandler
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 class ReadRequestTest {
 
+    private val gson = GsonBuilder().registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeHandler()).create()
     private lateinit var useCase: ReadRequest
 
     @Before
     fun init() {
-       useCase = ReadRequest()
+       useCase = ReadRequest(gson)
     }
 
     @Test
@@ -65,7 +71,7 @@ class ReadRequestTest {
         assertNotNull(transaction?.time)
         assertEquals(transaction?.merchant, "Burger King")
         assertEquals(transaction?.amount, 20)
-        assertEquals(transaction?.time, "2019-02-13T10:00:00.000Z")
+        assertEquals(transaction?.time, LocalDateTime.of(2019, 2, 13,10, 0, 0, 0))
     }
 
 }

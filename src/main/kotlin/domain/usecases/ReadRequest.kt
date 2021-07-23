@@ -1,10 +1,9 @@
 package domain.usecases
 
+import com.google.gson.Gson
 import domain.model.Request
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 
-class ReadRequest: UseCase<Request?> {
+class ReadRequest(private val gson: Gson): UseCase<Request?> {
     private var requestString: String? = null
 
     override fun execute(): Request? {
@@ -12,7 +11,7 @@ class ReadRequest: UseCase<Request?> {
             return null
         }
         return try {
-            Json.decodeFromString<Request>(requestString!!)
+            gson.fromJson(requestString!!, Request::class.java)
         } catch (exception: Exception) {
             null
         }

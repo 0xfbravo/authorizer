@@ -2,6 +2,7 @@
 
 - Princípios SOLID: pq? Melhor divisão de responsabilidades e redução de boilerplate code
 - Clean Arch: pq? Melhor divisão de responsabilidades entre camadas
-- Hashmap para buscas de transações: pq? O(1)
+- Hashset para buscas de transações: pq? O(1)
 - Koin: pq? injeção de dependências
 - Kotlinx Json: pq? para tratar request e response JSON
+- Kotlinx Datetime: pq? para tratar tempo de maneira mais fácil com integração do Kotlinx JSON

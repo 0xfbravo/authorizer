@@ -1,9 +1,6 @@
 package domain.model
 
-import kotlinx.serialization.Required
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
+import com.google.gson.annotations.SerializedName
 
-@Serializable
-data class Response(@Required val account: Account,
-                    @Transient val violations: List<String> = listOf())
+data class Response(@SerializedName("account") val account: Account,
+                    @SerializedName("violations") val violations: List<String> = listOf())

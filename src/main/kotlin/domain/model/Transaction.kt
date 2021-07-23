@@ -1,9 +1,9 @@
 package domain.model
 
-import kotlinx.serialization.Required
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
+import java.time.LocalDateTime
 
-@Serializable
-data class Transaction(@Required val merchant: String,
-                       @Required val amount: Int,
-                       @Required val time: String)
+data class Transaction(@SerializedName("merchant") val merchant: String,
+                       @SerializedName("amount") val amount: Int,
+                       @SerializedName("time") val time: LocalDateTime
+)

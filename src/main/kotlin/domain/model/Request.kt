@@ -1,8 +1,6 @@
 package domain.model
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
-data class Request(@SerialName("account") val account: Account? = null,
-                   @SerialName("transaction") val transaction: Transaction? = null)
+data class Request(@SerializedName("account") val account: Account? = null,
+                   @SerializedName("transaction") val transaction: Transaction? = null)
