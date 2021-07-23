@@ -1,6 +1,7 @@
 import core.dataLayer
 import core.domainLayer
 import core.presentationLayer
+import core.utils
 import org.koin.core.context.startKoin
 
 fun main(args: Array<String>) {
@@ -9,7 +10,7 @@ fun main(args: Array<String>) {
         // Koin Logger
         printLogger()
         // Modules
-        modules(dataLayer, domainLayer, presentationLayer)
+        modules(utils, dataLayer, domainLayer, presentationLayer)
     }
 
     // Does the magic! ~

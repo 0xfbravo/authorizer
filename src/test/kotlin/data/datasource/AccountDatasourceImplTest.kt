@@ -38,7 +38,7 @@ class AccountDatasourceImplTest {
     }
 
     @Test
-    fun testAddTwoAccount() {
+    fun testAddTwoAccounts() {
         val fistAccount = Account(false, 10)
         val secondAccount = Account(true, 300)
         assert(datasource.addAccount(fistAccount))

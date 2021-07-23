@@ -9,9 +9,7 @@ import java.util.*
 
 internal class LocalDateTimeHandler : JsonSerializer<LocalDateTime>, JsonDeserializer<LocalDateTime> {
 
-    companion object {
-        private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-    }
+    private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
     override fun serialize(src: LocalDateTime?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
         return JsonPrimitive(formatter.format(src))
