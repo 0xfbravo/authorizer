@@ -4,3 +4,4 @@
 - Clean Arch: pq? Melhor divisão de responsabilidades entre camadas
 - Hashmap para buscas de transações: pq? O(1)
 - Koin: pq? injeção de dependências
+- Kotlinx Json: pq? para tratar request e response JSON
