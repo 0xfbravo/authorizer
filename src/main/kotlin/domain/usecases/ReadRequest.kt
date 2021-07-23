@@ -11,7 +11,11 @@ class ReadRequest: UseCase<Request?> {
         if (requestString.isNullOrBlank()) {
             return null
         }
-        return Json.decodeFromString<Request>(requestString!!)
+        return try {
+            Json.decodeFromString<Request>(requestString!!)
+        } catch (exception: Exception) {
+            null
+        }
     }
 
     fun with(requestString: String): ReadRequest {
