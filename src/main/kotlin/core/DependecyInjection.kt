@@ -45,7 +45,7 @@ val domainLayer = module {
     single { UpdateCurrentAccount(get()) }
     // Transaction use cases
     single { CreateTransaction(get(), get(), get(), get(), get(), get(), get()) }
-    single { GetLastTransactions() }
+    single { GetLastTransactions(get()) }
     // Validator use cases
     single { ValidateAccountInitialization(get()) }
     single { ValidateCardActivation() }
