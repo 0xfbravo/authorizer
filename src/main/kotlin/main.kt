@@ -12,7 +12,7 @@ fun main(args: Array<String>) {
     }
 
     // Does the magic! ~
+    val authorizer = AuthorizerFacade()
     val operations = generateSequence(::readLine)
-    val authorizer = AuthorizerFacade(operations)
-    authorizer.start()
+    authorizer.process(operations)
 }
