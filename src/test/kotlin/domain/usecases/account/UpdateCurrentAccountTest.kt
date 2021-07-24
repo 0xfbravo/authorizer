@@ -10,12 +10,14 @@ import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import org.koin.test.inject
+import org.koin.test.mock.declare
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import kotlin.test.assertFailsWith
 
 class UpdateCurrentAccountTest: KoinTest {
 
+    private val useCase by inject<UpdateCurrentAccount>()
     private val account = Account(true, 100)
 
     @get:Rule
@@ -25,33 +27,18 @@ class UpdateCurrentAccountTest: KoinTest {
 
     @Test
     fun testUpdateCurrentAccount() {
-        loadKoinModules(
-            module {
-                single {
-                    mock<AccountRepository> { on { updateCurrentAccount(account) } doReturn true }
-                }
-            }
-        )
-        val useCase by inject<UpdateCurrentAccount>()
+        declare { mock<AccountRepository> { on { updateCurrentAccount(account) } doReturn true } }
         useCase.with(account).execute()
     }
 
     @Test
     fun testUpdateCurrentAccountError() {
-        loadKoinModules(
-            module {
-                single {
-                    mock<AccountRepository> { on { updateCurrentAccount(account) } doReturn false }
-                }
-            }
-        )
-        val useCase by inject<UpdateCurrentAccount>()
+        declare { mock<AccountRepository> { on { updateCurrentAccount(account) } doReturn false } }
         assertFailsWith(AccountCantBeUpdated::class) { useCase.with(account).execute() }
     }
 
     @Test
     fun testUpdateCurrentAccountNull() {
-        val useCase by inject<UpdateCurrentAccount>()
         assertFailsWith(AccountCantBeNull::class) { useCase.execute() }
     }
 

@@ -12,6 +12,7 @@ import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import org.koin.test.inject
+import org.koin.test.mock.declare
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import java.time.LocalDateTime
@@ -50,14 +51,7 @@ class ValidateDoubleTransactionTest: KoinTest {
             transactions.add(transaction)
         }
 
-        loadKoinModules(
-            module {
-                single {
-                    mock<TransactionRepository> { on { getTransactions(merchant) } doReturn transactions }
-                }
-            }
-        )
-
+        declare { mock<TransactionRepository> { on { getTransactions(merchant) } doReturn transactions } }
         val useCase by inject<ValidateDoubleTransaction>()
         val transaction = Transaction(merchant, amount, LocalDateTime.now())
 

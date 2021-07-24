@@ -1,17 +1,26 @@
 package domain.usecases.validator
 
-import core.AccountCantBeNull
+import core.*
 import domain.model.Account
 import domain.model.Transaction
 import domain.model.Violation
 import org.junit.Assert.*
+import org.junit.Rule
 import org.junit.Test
+import org.koin.test.KoinTest
+import org.koin.test.KoinTestRule
+import org.koin.test.inject
 import java.time.LocalDateTime
 import kotlin.test.assertFailsWith
 
-class ValidateCardLimitTest {
+class ValidateCardLimitTest: KoinTest {
 
-    private val useCase = ValidateCardLimit()
+    private val useCase by inject<ValidateCardLimit>()
+
+    @get:Rule
+    val koinTestRule = KoinTestRule.create {
+        modules(utils, dataLayer, domainLayer, presentationLayer)
+    }
 
     @Test
     fun testNullAccount() {

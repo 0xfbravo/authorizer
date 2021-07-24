@@ -1,20 +1,24 @@
 package domain.usecases.utils
 
-import com.google.gson.GsonBuilder
-import core.LocalDateTimeHandler
+import core.dataLayer
+import core.domainLayer
+import core.presentationLayer
+import core.utils
 import org.junit.Assert.*
-import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.koin.test.KoinTest
+import org.koin.test.KoinTestRule
+import org.koin.test.inject
 import java.time.LocalDateTime
 
-class ReadRequestTest {
+class ReadRequestTest: KoinTest {
 
-    private val gson = GsonBuilder().registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeHandler()).create()
-    private lateinit var useCase: ReadRequest
+    private val useCase by inject<ReadRequest>()
 
-    @Before
-    fun init() {
-       useCase = ReadRequest(gson)
+    @get:Rule
+    val koinTestRule = KoinTestRule.create {
+        modules(utils, dataLayer, domainLayer, presentationLayer)
     }
 
     @Test

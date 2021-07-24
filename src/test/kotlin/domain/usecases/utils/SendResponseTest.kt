@@ -1,25 +1,25 @@
 package domain.usecases.utils
 
-import com.google.gson.GsonBuilder
-import core.AccountCantBeNull
-import core.LocalDateTimeHandler
+import core.*
 import domain.model.Account
 import domain.model.Violation
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import java.time.LocalDateTime
+import org.koin.test.KoinTest
+import org.koin.test.KoinTestRule
+import org.koin.test.inject
 import kotlin.test.assertFailsWith
 
-class SendResponseTest {
+class SendResponseTest: KoinTest {
 
-    private val gson = GsonBuilder().registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeHandler()).create()
-    private lateinit var useCase: SendResponse
+    private val useCase by inject<SendResponse>()
     private val account = Account(true, 199)
     private val violations = listOf<Violation>()
 
-    @Before
-    fun init() {
-        useCase = SendResponse(gson)
+    @get:Rule
+    val koinTestRule = KoinTestRule.create {
+        modules(utils, dataLayer, domainLayer, presentationLayer)
     }
 
     @Test

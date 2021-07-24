@@ -11,6 +11,7 @@ import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import org.koin.test.inject
+import org.koin.test.mock.declare
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
@@ -46,14 +47,7 @@ class GetTransactionsTest: KoinTest {
 
     @Test
     fun testGetAllTransactionsWithMerchant() {
-        loadKoinModules(
-            module {
-                single {
-                    mock<TransactionRepository> { on { getTransactions(any()) } doReturn transactions }
-                }
-            }
-        )
-
+        declare { mock<TransactionRepository> { on { getTransactions(any()) } doReturn transactions } }
         val useCase by inject<GetTransactions>()
         val lastTransactions = useCase.with(merchantToSearch).execute()
         assert(lastTransactions.isNotEmpty())
