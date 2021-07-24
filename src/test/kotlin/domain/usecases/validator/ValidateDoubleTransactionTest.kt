@@ -1,9 +1,9 @@
 package domain.usecases.validator
 
-import data.repository.TransactionRepository
 import core.TransactionCantBeNull
-import domain.model.Violation
+import data.repository.TransactionRepository
 import domain.model.Transaction
+import domain.model.Violation
 import domain.usecases.transaction.GetTransactions
 import org.junit.Assert.*
 import org.junit.Test

@@ -2,8 +2,8 @@ package domain.usecases.account
 
 import core.AccountCantBeNull
 import data.repository.AccountRepository
-import domain.model.Violation
 import domain.model.Account
+import domain.model.Violation
 import domain.usecases.UseCase
 
 class CreateAccount(private val repository: AccountRepository): UseCase<Violation?> {

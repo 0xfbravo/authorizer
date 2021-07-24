@@ -6,7 +6,6 @@ import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime
 import kotlin.system.measureTimeMillis
-import kotlin.test.assertEquals
 
 class TransactionDataSourceImplTest {
 

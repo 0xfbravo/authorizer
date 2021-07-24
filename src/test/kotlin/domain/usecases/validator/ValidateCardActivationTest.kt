@@ -1,10 +1,9 @@
 package domain.usecases.validator
 
 import core.AccountCantBeNull
-import domain.model.Violation
 import domain.model.Account
+import domain.model.Violation
 import org.junit.Assert
-import org.junit.Assert.assertThrows
 import org.junit.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull

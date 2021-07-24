@@ -2,9 +2,9 @@ package domain.usecases.validator
 
 import core.AccountCantBeNull
 import core.TransactionCantBeNull
-import domain.model.Violation
 import domain.model.Account
 import domain.model.Transaction
+import domain.model.Violation
 import domain.usecases.UseCase
 
 class ValidateCardLimit: UseCase<Violation?> {

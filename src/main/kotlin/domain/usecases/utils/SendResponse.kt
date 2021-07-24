@@ -2,9 +2,9 @@ package domain.usecases.utils
 
 import com.google.gson.Gson
 import core.AccountCantBeNull
-import domain.model.Violation
 import domain.model.Account
 import domain.model.Response
+import domain.model.Violation
 import domain.usecases.UseCase
 
 class SendResponse(private val gson: Gson): UseCase<String> {

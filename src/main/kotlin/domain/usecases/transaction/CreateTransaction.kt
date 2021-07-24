@@ -1,7 +1,7 @@
 package domain.usecases.transaction
 
-import data.repository.TransactionRepository
 import core.TransactionCantBeNull
+import data.repository.TransactionRepository
 import domain.model.Transaction
 import domain.usecases.UseCase
 import domain.usecases.account.GetCurrentAccount

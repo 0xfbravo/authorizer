@@ -1,8 +1,8 @@
 package domain.usecases.validator
 
 import core.TransactionCantBeNull
-import domain.model.Violation
 import domain.model.Transaction
+import domain.model.Violation
 import domain.usecases.UseCase
 import domain.usecases.transaction.GetTransactions
 import java.time.LocalDateTime

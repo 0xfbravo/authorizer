@@ -1,11 +1,10 @@
 package domain.usecases.utils
 
 import com.google.gson.GsonBuilder
-import core.LocalDateTimeHandler
 import core.AccountCantBeNull
-import domain.model.Violation
+import core.LocalDateTimeHandler
 import domain.model.Account
-import org.junit.Assert.assertThrows
+import domain.model.Violation
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime

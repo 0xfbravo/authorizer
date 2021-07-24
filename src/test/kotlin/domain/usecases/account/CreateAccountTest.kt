@@ -1,10 +1,9 @@
 package domain.usecases.account
 
-import data.repository.AccountRepository
 import core.AccountCantBeNull
-import domain.model.Violation
+import data.repository.AccountRepository
 import domain.model.Account
-import org.junit.Assert.assertThrows
+import domain.model.Violation
 import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock

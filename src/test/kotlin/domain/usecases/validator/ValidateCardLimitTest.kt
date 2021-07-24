@@ -1,9 +1,9 @@
 package domain.usecases.validator
 
 import core.AccountCantBeNull
-import domain.model.Violation
 import domain.model.Account
 import domain.model.Transaction
+import domain.model.Violation
 import org.junit.Assert.*
 import org.junit.Test
 import java.time.LocalDateTime

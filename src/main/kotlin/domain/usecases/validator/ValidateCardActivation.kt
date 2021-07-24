@@ -1,8 +1,8 @@
 package domain.usecases.validator
 
 import core.AccountCantBeNull
-import domain.model.Violation
 import domain.model.Account
+import domain.model.Violation
 import domain.usecases.UseCase
 
 class ValidateCardActivation: UseCase<Violation?> {
