@@ -9,6 +9,7 @@ import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
 class CreateAccountTest {
@@ -19,7 +20,7 @@ class CreateAccountTest {
     fun testNullAccount() {
         val repository = mock<AccountRepository> { on { addAccount(account) } doReturn false }
         val useCase = CreateAccount(repository)
-        assertThrows(AccountCantBeNull::class.java) { useCase.execute() }
+        assertFailsWith(AccountCantBeNull::class) { useCase.execute() }
     }
 
     @Test

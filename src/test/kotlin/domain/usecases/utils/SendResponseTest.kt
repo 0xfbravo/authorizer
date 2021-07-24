@@ -9,6 +9,7 @@ import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime
+import kotlin.test.assertFailsWith
 
 class SendResponseTest {
 
@@ -24,7 +25,7 @@ class SendResponseTest {
 
     @Test
     fun testNullAccount() {
-        assertThrows(AccountCantBeNull::class.java) { useCase.execute() }
+        assertFailsWith(AccountCantBeNull::class) { useCase.execute() }
     }
 
     @Test

@@ -7,6 +7,7 @@ import domain.model.Transaction
 import org.junit.Assert.*
 import org.junit.Test
 import java.time.LocalDateTime
+import kotlin.test.assertFailsWith
 
 class ValidateCardLimitTest {
 
@@ -14,7 +15,7 @@ class ValidateCardLimitTest {
 
     @Test
     fun testNullAccount() {
-        assertThrows(AccountCantBeNull::class.java) { useCase.execute() }
+        assertFailsWith(AccountCantBeNull::class) { useCase.execute() }
     }
 
     @Test

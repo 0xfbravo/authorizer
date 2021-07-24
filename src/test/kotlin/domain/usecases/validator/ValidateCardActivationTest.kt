@@ -6,6 +6,7 @@ import domain.model.Account
 import org.junit.Assert
 import org.junit.Assert.assertThrows
 import org.junit.Test
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -15,7 +16,7 @@ class ValidateCardActivationTest {
 
     @Test
     fun testNullAccount() {
-        assertThrows(AccountCantBeNull::class.java) { useCase.execute() }
+        assertFailsWith(AccountCantBeNull::class) { useCase.execute() }
     }
 
     @Test

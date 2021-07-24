@@ -32,23 +32,6 @@ class TransactionDataSourceImplTest {
     }
 
     @Test
-    fun testGetAllTransactions() {
-        val merchants = listOf("Burger King", "Uber Eats")
-        val transactionsMax = 10
-        for (i in 1..transactionsMax) {
-            val transaction = Transaction(merchants.random(), i, LocalDateTime.now())
-            dataSource.addTransaction(transaction)
-        }
-        assertFalse(dataSource.getTransactions().isEmpty())
-        assertEquals(dataSource.getTransactions().size, transactionsMax)
-    }
-
-    @Test
-    fun testGetAllTransactionsWithEmptyResponse() {
-        assert(dataSource.getTransactions().isEmpty())
-    }
-
-    @Test
     fun testGetAllTransactionsFromMerchant() {
         val merchantToSearch = "Uber Eats"
         val merchants = listOf("Burger King", "Uber Eats")

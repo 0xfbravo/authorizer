@@ -4,10 +4,10 @@ import core.TransactionCantBeNull
 import domain.model.Transaction
 import domain.model.Violation
 import domain.usecases.UseCase
-import domain.usecases.transaction.GetLastTransactions
+import domain.usecases.transaction.GetTransactions
 import java.time.LocalDateTime
 
-class ValidateHighFrequencySmallInterval(private val getLastTransactions: GetLastTransactions): UseCase<Violation?> {
+class ValidateHighFrequencySmallInterval(private val getTransactions: GetTransactions): UseCase<Violation?> {
 
     private val maxInterval = 2L
     private val maxTransactions = 3
@@ -18,7 +18,7 @@ class ValidateHighFrequencySmallInterval(private val getLastTransactions: GetLas
             throw TransactionCantBeNull()
         }
 
-        val lastTransactionsFromMerchant = getLastTransactions.with(transaction!!.merchant).execute()
+        val lastTransactionsFromMerchant = getTransactions.with(transaction!!.merchant).execute()
         val highFrequencyTransactions = lastTransactionsFromMerchant
             .filter { it.time.isAfter(LocalDateTime.now().minusMinutes(maxInterval)) }
         val isHighFrequencyViolated = highFrequencyTransactions.size >= maxTransactions

@@ -4,12 +4,13 @@ import data.repository.TransactionRepository
 import core.TransactionCantBeNull
 import domain.model.Violation
 import domain.model.Transaction
-import domain.usecases.transaction.GetLastTransactions
+import domain.usecases.transaction.GetTransactions
 import org.junit.Assert.*
 import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import java.time.LocalDateTime
+import kotlin.test.assertFailsWith
 
 class ValidateDoubleTransactionTest {
 
@@ -19,15 +20,15 @@ class ValidateDoubleTransactionTest {
     @Test
     fun validateDoubleTransactionNullTransaction() {
         val repository = mock<TransactionRepository> { on { getTransactions(merchant) } doReturn emptyList() }
-        val getLastTransactions = GetLastTransactions(repository)
+        val getLastTransactions = GetTransactions(repository)
         val useCase = ValidateDoubleTransaction(getLastTransactions)
-        assertThrows(TransactionCantBeNull::class.java) { useCase.execute() }
+        assertFailsWith(TransactionCantBeNull::class) { useCase.execute() }
     }
 
     @Test
     fun validateDoubleTransactionSuccess() {
         val repository = mock<TransactionRepository> { on { getTransactions(merchant) } doReturn emptyList() }
-        val getLastTransactions = GetLastTransactions(repository)
+        val getLastTransactions = GetTransactions(repository)
         val useCase = ValidateDoubleTransaction(getLastTransactions)
         val transaction = Transaction(merchant, amount, LocalDateTime.now())
         val violation = useCase.with(transaction).execute()
@@ -44,7 +45,7 @@ class ValidateDoubleTransactionTest {
         }
 
         val repository = mock<TransactionRepository> { on { getTransactions(merchant) } doReturn transactions }
-        val getLastTransactions = GetLastTransactions(repository)
+        val getLastTransactions = GetTransactions(repository)
         val useCase = ValidateDoubleTransaction(getLastTransactions)
         val transaction = Transaction(merchant, amount, LocalDateTime.now())
 

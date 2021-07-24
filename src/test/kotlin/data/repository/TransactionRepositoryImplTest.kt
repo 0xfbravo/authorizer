@@ -28,20 +28,6 @@ class TransactionRepositoryImplTest {
     }
 
     @Test
-    fun testGetTransactionsWithData() {
-        val dataSource = mock<TransactionDataSource> { on { getTransactions() } doReturn listOf(transaction) }
-        val repository: TransactionRepository = TransactionRepositoryImpl(dataSource)
-        assert(repository.getTransactions().isNotEmpty())
-    }
-
-    @Test
-    fun testGetTransactionsEmpty() {
-        val dataSource = mock<TransactionDataSource> { on { getTransactions() } doReturn listOf() }
-        val repository: TransactionRepository = TransactionRepositoryImpl(dataSource)
-        assert(repository.getTransactions().isEmpty())
-    }
-
-    @Test
     fun testGetTransactionsWithMerchantWithData() {
         val dataSource = mock<TransactionDataSource> { on { getTransactions(merchant) } doReturn listOf(transaction) }
         val repository: TransactionRepository = TransactionRepositoryImpl(dataSource)

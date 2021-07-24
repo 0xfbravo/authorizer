@@ -1,5 +1,6 @@
 package domain.usecases.transaction
 
+import core.MerchantCantBeNull
 import data.repository.TransactionRepository
 import domain.model.Transaction
 import org.junit.Before
@@ -7,8 +8,9 @@ import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import java.time.LocalDateTime
+import kotlin.test.assertFailsWith
 
-class GetLastTransactionsTest {
+class GetTransactionsTest {
 
     private val merchantToSearch = "Burger King"
     private var transactions = arrayListOf<Transaction>()
@@ -25,25 +27,16 @@ class GetLastTransactionsTest {
     }
 
     @Test
-    fun testGetAllTransactionsWithoutMerchant() {
-        val repository = mock<TransactionRepository> { on { getTransactions() } doReturn transactions }
-        val useCase = GetLastTransactions(repository)
-        val lastTransactions = useCase.execute()
-        assert(lastTransactions.isNotEmpty())
-    }
-
-    @Test
-    fun testGetAllTransactionsWithoutMerchantWithEmptyResponse() {
-        val repository = mock<TransactionRepository> { on { getTransactions() } doReturn listOf() }
-        val useCase = GetLastTransactions(repository)
-        val lastTransactions = useCase.execute()
-        assert(lastTransactions.isEmpty())
+    fun testGetAllTransactionMerchantNull() {
+        val repository = mock<TransactionRepository> { on { getTransactions(merchantToSearch) } doReturn transactions }
+        val useCase = GetTransactions(repository)
+        assertFailsWith(MerchantCantBeNull::class) { useCase.execute() }
     }
 
     @Test
     fun testGetAllTransactionsWithMerchant() {
         val repository = mock<TransactionRepository> { on { getTransactions(merchantToSearch) } doReturn transactions }
-        val useCase = GetLastTransactions(repository)
+        val useCase = GetTransactions(repository)
         val lastTransactions = useCase.with(merchantToSearch).execute()
         assert(lastTransactions.isNotEmpty())
     }
@@ -51,7 +44,7 @@ class GetLastTransactionsTest {
     @Test
     fun testGetAllTransactionsWithMerchantWithEmptyResponse() {
         val repository = mock<TransactionRepository> { on { getTransactions(merchantToSearch) } doReturn listOf() }
-        val useCase = GetLastTransactions(repository)
+        val useCase = GetTransactions(repository)
         val lastTransactions = useCase.with(merchantToSearch).execute()
         assert(lastTransactions.isEmpty())
     }

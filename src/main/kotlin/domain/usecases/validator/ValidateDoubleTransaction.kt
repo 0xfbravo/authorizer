@@ -4,10 +4,10 @@ import core.TransactionCantBeNull
 import domain.model.Violation
 import domain.model.Transaction
 import domain.usecases.UseCase
-import domain.usecases.transaction.GetLastTransactions
+import domain.usecases.transaction.GetTransactions
 import java.time.LocalDateTime
 
-class ValidateDoubleTransaction(private val getLastTransactions: GetLastTransactions): UseCase<Violation?> {
+class ValidateDoubleTransaction(private val getTransactions: GetTransactions): UseCase<Violation?> {
 
     private val maxInterval = 2L
     private var transaction: Transaction? = null
@@ -17,7 +17,7 @@ class ValidateDoubleTransaction(private val getLastTransactions: GetLastTransact
             throw TransactionCantBeNull()
         }
 
-        val lastTransactionsFromMerchant = getLastTransactions.with(transaction!!.merchant).execute()
+        val lastTransactionsFromMerchant = getTransactions.with(transaction!!.merchant).execute()
         val doubleTransactions = lastTransactionsFromMerchant
             .filter { it.time.isAfter(LocalDateTime.now().minusMinutes(maxInterval)) }
             .filter { it.merchant == transaction!!.merchant && it.amount == transaction!!.amount }
