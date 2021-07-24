@@ -30,7 +30,8 @@ class ValidateDoubleTransactionTest {
         val getLastTransactions = GetLastTransactions(repository)
         val useCase = ValidateDoubleTransaction(getLastTransactions)
         val transaction = Transaction(merchant, amount, LocalDateTime.now())
-        useCase.with(transaction).execute()
+        val violation = useCase.with(transaction).execute()
+        assertNull(violation)
     }
 
     @Test

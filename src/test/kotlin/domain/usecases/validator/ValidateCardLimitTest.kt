@@ -21,7 +21,8 @@ class ValidateCardLimitTest {
     fun testValidTransaction() {
         val account = Account(true, 1200)
         val transaction = Transaction("Burger King", 200, LocalDateTime.now())
-        useCase.with(account, transaction).execute()
+        val violation = useCase.with(account, transaction).execute()
+        assertNull(violation)
     }
 
     @Test

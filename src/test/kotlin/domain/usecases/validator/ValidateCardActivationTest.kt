@@ -7,6 +7,7 @@ import org.junit.Assert
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class ValidateCardActivationTest {
 
@@ -20,7 +21,8 @@ class ValidateCardActivationTest {
     @Test
     fun testActiveCard() {
         val account = Account(true, 1200)
-        useCase.with(account).execute()
+        val violation = useCase.with(account).execute()
+        assertNull(violation)
     }
 
     @Test
