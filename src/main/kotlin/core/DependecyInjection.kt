@@ -50,7 +50,7 @@ val domainLayer = module {
     single { ValidateAccountInitialization(get()) }
     single { ValidateCardActivation() }
     single { ValidateCardLimit() }
-    single { ValidateDoubleTransaction() }
+    single { ValidateDoubleTransaction(get()) }
     single { ValidateHighFrequencySmallInterval() }
     // Utils
     single { ReadRequest(get()) }
