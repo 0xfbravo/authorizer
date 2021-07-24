@@ -5,10 +5,10 @@ import domain.AccountAlreadyInitialized
 import domain.AccountCantBeNull
 import domain.model.Account
 
-class CreateAccount(private val repository: AccountRepository): UseCase<Boolean> {
+class CreateAccount(private val repository: AccountRepository): UseCase<Unit> {
     private var account: Account? = null
 
-    override fun execute(): Boolean {
+    override fun execute() {
         if (account == null) {
             throw AccountCantBeNull()
         }
@@ -17,7 +17,6 @@ class CreateAccount(private val repository: AccountRepository): UseCase<Boolean>
         if (!accountWasAdded) {
             throw AccountAlreadyInitialized()
         }
-        return accountWasAdded
     }
 
     fun with(account: Account): CreateAccount {

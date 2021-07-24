@@ -31,7 +31,7 @@ class CreateAccountTest {
     fun testSuccessCreateAccount() {
         val repository = mock<AccountRepository> { on { addAccount(account) } doReturn true }
         val useCase = CreateAccount(repository)
-        assert(useCase.with(account).execute())
+        useCase.with(account).execute()
     }
 
 }
