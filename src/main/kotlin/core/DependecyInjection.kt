@@ -33,7 +33,7 @@ val dataLayer = module {
 
 val domainLayer = module {
     // Use cases
-    single { CreateAccount() }
+    single { CreateAccount(get()) }
     single { CreateTransaction() }
     single { GetLastTransactions() }
     single { ReadRequest(get()) }
