@@ -104,6 +104,8 @@ class CreateTransactionTest: KoinTest {
                 on { getCurrentAccount() } doReturn activeCardHighLimit
                 on { updateCurrentAccount(any()) } doReturn true
             }
+        }
+        declare {
             mock<TransactionRepository> {
                 on { getTransactions(any()) } doReturn transactions
             }
@@ -115,6 +117,37 @@ class CreateTransactionTest: KoinTest {
 
         assert(response.violations.isNotEmpty())
         assertEquals(response.violations.first(), Violation.HighFrequencySmallInterval)
+    }
+
+    @Test
+    fun testCreateTransactionDoubleTransactionViolation() {
+        val transactionsMax = 2
+        val transactions = arrayListOf<Transaction>()
+        for (i in 1..transactionsMax) {
+            val transaction = Transaction("Burger King", 33, LocalDateTime.now())
+            transactions.add(transaction)
+        }
+
+        declare {
+            mock<AccountRepository> {
+                on { containsAccount() } doReturn true
+                on { getCurrentAccount() } doReturn activeCardHighLimit
+                on { updateCurrentAccount(any()) } doReturn true
+            }
+        }
+        declare {
+            mock<TransactionRepository> {
+                on { getTransactions(any()) } doReturn transactions
+            }
+        }
+
+        val transaction = Transaction("Burger King", 33, LocalDateTime.now())
+        val response = useCase.with(transaction).execute()
+        assertNotNull(response.account.activeCard)
+        assertNotNull(response.account.availableLimit)
+
+        assert(response.violations.isNotEmpty())
+        assertEquals(response.violations.first(), Violation.DoubleTransaction)
     }
 
     @Test
