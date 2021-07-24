@@ -34,14 +34,16 @@ val dataLayer = module {
 val domainLayer = module {
     // Use cases
     single { CreateAccount(get()) }
-    single { CreateTransaction() }
+    single { CreateTransaction(get(), get(), get(), get(), get(), get(), get()) }
+    single { GetCurrentAccount(get()) }
     single { GetLastTransactions() }
     single { ReadRequest(get()) }
+    single { SendResponse(get()) }
     single { ValidateAccountInitialization(get()) }
     single { ValidateCardActivation() }
     single { ValidateCardLimit() }
     single { ValidateDoubleTransaction() }
-    single { ValidateHighFrequency() }
+    single { ValidateHighFrequencySmallInterval() }
 }
 
 val presentationLayer = module {

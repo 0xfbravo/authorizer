@@ -1,6 +1,6 @@
 package domain.usecases
 
-class ValidateHighFrequency: UseCase<Boolean> {
+class ValidateHighFrequencySmallInterval: UseCase<Boolean> {
     override fun execute(): Boolean {
         TODO("Not yet implemented")
     }

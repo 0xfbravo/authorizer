@@ -12,7 +12,7 @@ class ValidateCardLimit: UseCase<Unit> {
     private var transaction: Transaction? = null
 
     override fun execute() {
-        if (account == null) {
+        if (account == null || account?.availableLimit == null) {
             throw AccountCantBeNull()
         }
 
@@ -20,7 +20,8 @@ class ValidateCardLimit: UseCase<Unit> {
             throw TransactionCantBeNull()
         }
 
-        if (account!!.availableLimit < transaction!!.amount) {
+        val availableLimit = account!!.availableLimit!!
+        if (availableLimit < transaction!!.amount) {
             throw InsufficientLimit()
         }
     }
