@@ -1,9 +1,9 @@
 package domain.usecases.transaction
 
 import data.repository.TransactionRepository
-import domain.TransactionCantBeNull
+import core.TransactionCantBeNull
 import domain.model.Transaction
-import domain.usecases.*
+import domain.usecases.UseCase
 import domain.usecases.account.GetCurrentAccount
 import domain.usecases.validator.*
 
@@ -23,7 +23,7 @@ class CreateTransaction(private val repository: TransactionRepository,
         }
 
         validateAccountInitialization.execute()
-        val account = getCurrentAccount.execute()
+        val account = getCurrentAccount.execute()!!
         validateCardActivation.with(account).execute()
         validateCardLimit.with(account, transaction!!).execute()
         validateHighFrequency.execute()

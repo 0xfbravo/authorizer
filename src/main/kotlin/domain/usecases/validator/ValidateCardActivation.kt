@@ -1,21 +1,23 @@
 package domain.usecases.validator
 
-import domain.AccountCantBeNull
-import domain.CardNotActive
+import core.AccountCantBeNull
+import domain.model.Violation
 import domain.model.Account
 import domain.usecases.UseCase
 
-class ValidateCardActivation: UseCase<Unit> {
+class ValidateCardActivation: UseCase<Violation?> {
     private var account: Account? = null
 
-    override fun execute() {
+    override fun execute(): Violation? {
         if (account == null || account?.activeCard == null) {
             throw AccountCantBeNull()
         }
 
         if (!account!!.activeCard!!) {
-            throw CardNotActive()
+            return Violation.CardNotActive
         }
+
+        return null
     }
 
     fun with(account: Account): ValidateCardActivation {

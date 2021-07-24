@@ -2,7 +2,8 @@ package domain.usecases.utils
 
 import com.google.gson.GsonBuilder
 import core.LocalDateTimeHandler
-import domain.AccountCantBeNull
+import core.AccountCantBeNull
+import domain.model.Violation
 import domain.model.Account
 import org.junit.Assert.assertThrows
 import org.junit.Before
@@ -14,7 +15,7 @@ class SendResponseTest {
     private val gson = GsonBuilder().registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeHandler()).create()
     private lateinit var useCase: SendResponse
     private val account = Account(true, 199)
-    private val violations = listOf<String>()
+    private val violations = listOf<Violation>()
 
     @Before
     fun init() {
@@ -40,13 +41,13 @@ class SendResponseTest {
 
     @Test
     fun testSendResponseValidAccountWithViolations() {
-        val response = useCase.with(account, listOf("high-frequency-small-interval","double-transaction")).execute()
+        val response = useCase.with(account, listOf(Violation.HighFrequencySmallInterval, Violation.DoubleTransaction)).execute()
         println(response)
     }
 
     @Test
     fun testSendResponseInvalidAccount() {
-        val response = useCase.with(Account(), listOf("account-not-initialized")).execute()
+        val response = useCase.with(Account(), listOf(Violation.AccountNotInitialized)).execute()
         println(response)
     }
 

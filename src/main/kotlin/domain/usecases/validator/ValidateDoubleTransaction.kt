@@ -1,18 +1,18 @@
 package domain.usecases.validator
 
-import domain.DoubleTransaction
-import domain.TransactionCantBeNull
+import core.TransactionCantBeNull
+import domain.model.Violation
 import domain.model.Transaction
 import domain.usecases.UseCase
 import domain.usecases.transaction.GetLastTransactions
 import java.time.LocalDateTime
 
-class ValidateDoubleTransaction(private val getLastTransactions: GetLastTransactions): UseCase<Unit> {
+class ValidateDoubleTransaction(private val getLastTransactions: GetLastTransactions): UseCase<Violation?> {
 
     private val maxInterval = 2L
     private var transaction: Transaction? = null
 
-    override fun execute() {
+    override fun execute(): Violation? {
         if (transaction == null) {
             throw TransactionCantBeNull()
         }
@@ -23,8 +23,10 @@ class ValidateDoubleTransaction(private val getLastTransactions: GetLastTransact
             .filter { it.merchant == transaction!!.merchant && it.amount == transaction!!.amount }
         val isDoubleTransactionViolated = doubleTransactions.isNotEmpty()
         if (isDoubleTransactionViolated) {
-            throw DoubleTransaction()
+            return Violation.DoubleTransaction
         }
+
+        return null
     }
 
     fun with(transaction: Transaction): ValidateDoubleTransaction {

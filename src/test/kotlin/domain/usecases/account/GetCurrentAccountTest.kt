@@ -1,13 +1,12 @@
 package domain.usecases.account
 
 import data.repository.AccountRepository
-import domain.AccountNotInitialized
 import domain.model.Account
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
+import kotlin.test.assertNull
 
 class GetCurrentAccountTest {
 
@@ -17,7 +16,7 @@ class GetCurrentAccountTest {
     fun testAccountInitialized() {
         val repository = mock<AccountRepository> { on { getCurrentAccount() } doReturn account }
         val useCase = GetCurrentAccount(repository)
-        val currentAccount = useCase.execute()
+        val currentAccount = useCase.execute()!!
         assertEquals(account.activeCard, currentAccount.activeCard)
         assertEquals(account.availableLimit, currentAccount.availableLimit)
     }
@@ -26,7 +25,8 @@ class GetCurrentAccountTest {
     fun testAccountNotInitialized() {
         val repository = mock<AccountRepository> { on { getCurrentAccount() } doReturn null }
         val useCase = GetCurrentAccount(repository)
-        assertThrows(AccountNotInitialized::class.java) { useCase.execute() }
+        val currentAccount = useCase.execute()
+        assertNull(currentAccount)
     }
 
 }

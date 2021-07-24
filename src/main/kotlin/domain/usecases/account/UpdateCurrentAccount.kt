@@ -1,9 +1,8 @@
 package domain.usecases.account
 
 import data.repository.AccountRepository
-import domain.AccountAlreadyInitialized
-import domain.AccountCantBeNull
-import domain.AccountCantBeUpdated
+import core.AccountCantBeNull
+import core.AccountCantBeUpdated
 import domain.model.Account
 import domain.usecases.UseCase
 

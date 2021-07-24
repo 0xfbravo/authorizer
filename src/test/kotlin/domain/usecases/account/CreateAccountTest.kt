@@ -1,13 +1,15 @@
 package domain.usecases.account
 
 import data.repository.AccountRepository
-import domain.AccountAlreadyInitialized
-import domain.AccountCantBeNull
+import core.AccountCantBeNull
+import domain.model.Violation
 import domain.model.Account
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class CreateAccountTest {
 
@@ -27,7 +29,9 @@ class CreateAccountTest {
             on { getCurrentAccount() } doReturn Account(true, 1000)
         }
         val useCase = CreateAccount(repository)
-        assertThrows(AccountAlreadyInitialized::class.java) { useCase.with(account).execute() }
+        val violation = useCase.with(account).execute()
+        assertNotNull(violation)
+        assertEquals(violation, Violation.AccountAlreadyInitialized)
     }
 
     @Test

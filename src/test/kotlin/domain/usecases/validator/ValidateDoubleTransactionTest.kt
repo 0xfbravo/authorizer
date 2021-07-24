@@ -1,8 +1,8 @@
 package domain.usecases.validator
 
 import data.repository.TransactionRepository
-import domain.DoubleTransaction
-import domain.TransactionCantBeNull
+import core.TransactionCantBeNull
+import domain.model.Violation
 import domain.model.Transaction
 import domain.usecases.transaction.GetLastTransactions
 import org.junit.Assert.*
@@ -41,11 +41,15 @@ class ValidateDoubleTransactionTest {
             val transaction = Transaction(merchant, amount, LocalDateTime.now().minusMinutes(i.toLong()))
             transactions.add(transaction)
         }
+
         val repository = mock<TransactionRepository> { on { getTransactions(merchant) } doReturn transactions }
         val getLastTransactions = GetLastTransactions(repository)
         val useCase = ValidateDoubleTransaction(getLastTransactions)
         val transaction = Transaction(merchant, amount, LocalDateTime.now())
-        assertThrows(DoubleTransaction::class.java) { useCase.with(transaction).execute() }
+
+        val violation = useCase.with(transaction).execute()
+        assertNotNull(violation)
+        assertEquals(violation, Violation.DoubleTransaction)
     }
 
 }

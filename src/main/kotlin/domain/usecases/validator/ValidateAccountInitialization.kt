@@ -1,16 +1,17 @@
 package domain.usecases.validator
 
 import data.repository.AccountRepository
-import domain.AccountNotInitialized
+import domain.model.Violation
 import domain.usecases.UseCase
 
-class ValidateAccountInitialization(private val repository: AccountRepository): UseCase<Unit> {
+class ValidateAccountInitialization(private val repository: AccountRepository): UseCase<Violation?> {
 
-    override fun execute() {
+    override fun execute(): Violation? {
         val isAccountCreated = repository.containsAccount()
         if (!isAccountCreated) {
-            throw AccountNotInitialized()
+            return Violation.AccountNotInitialized
         }
+        return null
     }
 
 }

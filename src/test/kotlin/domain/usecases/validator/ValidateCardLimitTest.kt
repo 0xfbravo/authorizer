@@ -1,7 +1,7 @@
 package domain.usecases.validator
 
-import domain.AccountCantBeNull
-import domain.InsufficientLimit
+import core.AccountCantBeNull
+import domain.model.Violation
 import domain.model.Account
 import domain.model.Transaction
 import org.junit.Assert.*
@@ -28,7 +28,9 @@ class ValidateCardLimitTest {
     fun testInsufficientLimit() {
         val account = Account(true, 10)
         val transaction = Transaction("Burger King", 200, LocalDateTime.now())
-        assertThrows(InsufficientLimit::class.java) { useCase.with(account, transaction).execute() }
+        val violation = useCase.with(account, transaction).execute()
+        assertNotNull(violation)
+        assertEquals(violation, Violation.InsufficientLimit)
     }
 
 }
