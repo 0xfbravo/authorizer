@@ -1,35 +1,41 @@
 package domain.usecases.validator
 
-import core.TransactionCantBeNull
+import core.*
 import data.repository.TransactionRepository
 import domain.model.Transaction
 import domain.model.Violation
-import domain.usecases.transaction.GetTransactions
 import org.junit.Assert.*
+import org.junit.Rule
 import org.junit.Test
+import org.koin.core.context.loadKoinModules
+import org.koin.dsl.module
+import org.koin.test.KoinTest
+import org.koin.test.KoinTestRule
+import org.koin.test.inject
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import java.time.LocalDateTime
 import kotlin.test.assertFailsWith
 
-class ValidateHighFrequencySmallIntervalTest {
+class ValidateHighFrequencySmallIntervalTest: KoinTest {
 
     private val merchant = "Burger King"
     private val amount = 200
 
+    @get:Rule
+    val koinTestRule = KoinTestRule.create {
+        modules(utils, dataLayer, domainLayer, presentationLayer)
+    }
+
     @Test
     fun validateHighFrequencyNullTransaction() {
-        val repository = mock<TransactionRepository> { on { getTransactions(merchant) } doReturn emptyList() }
-        val getLastTransactions = GetTransactions(repository)
-        val useCase = ValidateHighFrequencySmallInterval(getLastTransactions)
+        val useCase by inject<ValidateHighFrequencySmallInterval>()
         assertFailsWith(TransactionCantBeNull::class) { useCase.execute() }
     }
 
     @Test
     fun validateHighFrequencySuccess() {
-        val repository = mock<TransactionRepository> { on { getTransactions(merchant) } doReturn emptyList() }
-        val getLastTransactions = GetTransactions(repository)
-        val useCase = ValidateHighFrequencySmallInterval(getLastTransactions)
+        val useCase by inject<ValidateHighFrequencySmallInterval>()
         val transaction = Transaction(merchant, amount, LocalDateTime.now())
         val violation = useCase.with(transaction).execute()
         assertNull(violation)
@@ -44,9 +50,15 @@ class ValidateHighFrequencySmallIntervalTest {
             transactions.add(transaction)
         }
 
-        val repository = mock<TransactionRepository> { on { getTransactions(merchant) } doReturn transactions }
-        val getLastTransactions = GetTransactions(repository)
-        val useCase = ValidateHighFrequencySmallInterval(getLastTransactions)
+        loadKoinModules(
+            module {
+                single {
+                    mock<TransactionRepository> { on { getTransactions(merchant) } doReturn transactions }
+                }
+            }
+        )
+
+        val useCase by inject<ValidateHighFrequencySmallInterval>()
         val transaction = Transaction(merchant, amount, LocalDateTime.now())
 
         val violation = useCase.with(transaction).execute()

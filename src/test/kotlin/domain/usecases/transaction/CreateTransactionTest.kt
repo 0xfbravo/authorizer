@@ -5,7 +5,6 @@ import core.domainLayer
 import core.presentationLayer
 import core.utils
 import data.repository.AccountRepository
-import data.repository.TransactionRepository
 import domain.model.Account
 import domain.model.Transaction
 import domain.model.Violation
@@ -31,7 +30,6 @@ class CreateTransactionTest: KoinTest {
 
     @get:Rule
     val koinTestRule = KoinTestRule.create {
-        printLogger()
         modules(utils, dataLayer, domainLayer, presentationLayer)
     }
 
@@ -41,9 +39,6 @@ class CreateTransactionTest: KoinTest {
             module {
                 single {
                     mock<AccountRepository> { on { containsAccount() } doReturn false }
-                }
-                single {
-                    mock<TransactionRepository> { }
                 }
             }
         )
@@ -66,9 +61,6 @@ class CreateTransactionTest: KoinTest {
                         on { getCurrentAccount() } doReturn inactiveCard
                         on { updateCurrentAccount(any()) } doReturn true
                     }
-                }
-                single {
-                    mock<TransactionRepository> { }
                 }
             }
         )
@@ -93,9 +85,6 @@ class CreateTransactionTest: KoinTest {
                         on { updateCurrentAccount(any()) } doReturn true
                     }
                 }
-                single {
-                    mock<TransactionRepository> { }
-                }
             }
         )
 
@@ -118,9 +107,6 @@ class CreateTransactionTest: KoinTest {
                         on { getCurrentAccount() } doReturn inactiveCardLowLimit
                         on { updateCurrentAccount(any()) } doReturn true
                     }
-                }
-                single {
-                    mock<TransactionRepository> { }
                 }
             }
         )
