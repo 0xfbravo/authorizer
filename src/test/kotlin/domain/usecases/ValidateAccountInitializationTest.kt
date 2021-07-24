@@ -2,6 +2,7 @@ package domain.usecases
 
 import data.repository.AccountRepository
 import domain.AccountNotInitialized
+import domain.usecases.validator.ValidateAccountInitialization
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.mockito.kotlin.doReturn

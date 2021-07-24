@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import core.LocalDateTimeHandler
 import domain.AccountCantBeNull
 import domain.model.Account
+import domain.usecases.utils.SendResponse
 import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test

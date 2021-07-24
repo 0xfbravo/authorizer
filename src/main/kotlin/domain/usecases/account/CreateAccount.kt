@@ -1,9 +1,10 @@
-package domain.usecases
+package domain.usecases.account
 
 import data.repository.AccountRepository
 import domain.AccountAlreadyInitialized
 import domain.AccountCantBeNull
 import domain.model.Account
+import domain.usecases.UseCase
 
 class CreateAccount(private val repository: AccountRepository): UseCase<Unit> {
     private var account: Account? = null

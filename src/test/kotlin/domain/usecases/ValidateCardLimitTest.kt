@@ -1,10 +1,10 @@
 package domain.usecases
 
 import domain.AccountCantBeNull
-import domain.CardNotActive
 import domain.InsufficientLimit
 import domain.model.Account
 import domain.model.Transaction
+import domain.usecases.validator.ValidateCardLimit
 import org.junit.Assert.*
 import org.junit.Test
 import java.time.LocalDateTime

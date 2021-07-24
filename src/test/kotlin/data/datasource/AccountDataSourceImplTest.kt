@@ -30,9 +30,25 @@ class AccountDataSourceImplTest {
     }
 
     @Test
+    fun testDatasourceUpdateAccount() {
+        val account = Account(false, 10)
+        dataSource.addAccount(account)
+        assert(dataSource.containsAccount())
+
+        val updatedAccount = Account(true, 1300)
+        dataSource.updateCurrentAccount(updatedAccount)
+
+        val currentAccount = dataSource.getCurrentAccount()
+        assertNotNull(currentAccount)
+        assertEquals(currentAccount.activeCard, updatedAccount.activeCard)
+        assertEquals(currentAccount.availableLimit, updatedAccount.availableLimit)
+    }
+
+    @Test
     fun testGetCurrentAccount() {
         val account = Account(false, 10)
         dataSource.addAccount(account)
+
         val currentAccount = dataSource.getCurrentAccount()
         assertNotNull(currentAccount)
         assertEquals(currentAccount.activeCard, account.activeCard)
@@ -45,6 +61,7 @@ class AccountDataSourceImplTest {
         val secondAccount = Account(true, 300)
         assert(dataSource.addAccount(fistAccount))
         assertFalse(dataSource.addAccount(secondAccount))
+
         val currentAccount = dataSource.getCurrentAccount()
         assertNotNull(currentAccount)
         assertEquals(currentAccount.activeCard, fistAccount.activeCard)

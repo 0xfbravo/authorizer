@@ -1,8 +1,9 @@
-package domain.usecases
+package domain.usecases.validator
 
 import domain.AccountCantBeNull
 import domain.CardNotActive
 import domain.model.Account
+import domain.usecases.UseCase
 
 class ValidateCardActivation: UseCase<Unit> {
     private var account: Account? = null

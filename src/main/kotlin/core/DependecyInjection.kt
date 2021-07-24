@@ -10,7 +10,14 @@ import data.repository.AccountRepository
 import data.repository.AccountRepositoryImpl
 import data.repository.TransactionRepository
 import data.repository.TransactionRepositoryImpl
-import domain.usecases.*
+import domain.usecases.account.CreateAccount
+import domain.usecases.account.GetCurrentAccount
+import domain.usecases.account.UpdateCurrentAccount
+import domain.usecases.transaction.CreateTransaction
+import domain.usecases.transaction.GetLastTransactions
+import domain.usecases.utils.ReadRequest
+import domain.usecases.utils.SendResponse
+import domain.usecases.validator.*
 import org.koin.dsl.module
 import java.time.LocalDateTime
 
@@ -32,18 +39,22 @@ val dataLayer = module {
 }
 
 val domainLayer = module {
-    // Use cases
+    // Account use cases
     single { CreateAccount(get()) }
-    single { CreateTransaction(get(), get(), get(), get(), get(), get(), get()) }
     single { GetCurrentAccount(get()) }
+    single { UpdateCurrentAccount(get()) }
+    // Transaction use cases
+    single { CreateTransaction(get(), get(), get(), get(), get(), get(), get()) }
     single { GetLastTransactions() }
-    single { ReadRequest(get()) }
-    single { SendResponse(get()) }
+    // Validator use cases
     single { ValidateAccountInitialization(get()) }
     single { ValidateCardActivation() }
     single { ValidateCardLimit() }
     single { ValidateDoubleTransaction() }
     single { ValidateHighFrequencySmallInterval() }
+    // Utils
+    single { ReadRequest(get()) }
+    single { SendResponse(get()) }
 }
 
 val presentationLayer = module {

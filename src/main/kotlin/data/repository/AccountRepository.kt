@@ -6,6 +6,7 @@ import domain.model.Account
 interface AccountRepository {
     fun getCurrentAccount(): Account?
     fun addAccount(account: Account): Boolean
+    fun updateCurrentAccount(account: Account): Boolean
     fun containsAccount(): Boolean
 }
 
@@ -17,6 +18,10 @@ class AccountRepositoryImpl(private val dataSource: AccountDataSource): AccountR
 
     override fun addAccount(account: Account): Boolean {
         return dataSource.addAccount(account)
+    }
+
+    override fun updateCurrentAccount(account: Account): Boolean {
+        return dataSource.updateCurrentAccount(account)
     }
 
     override fun containsAccount(): Boolean {

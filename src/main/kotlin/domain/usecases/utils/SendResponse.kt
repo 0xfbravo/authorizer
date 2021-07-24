@@ -1,9 +1,10 @@
-package domain.usecases
+package domain.usecases.utils
 
 import com.google.gson.Gson
 import domain.AccountCantBeNull
 import domain.model.Account
 import domain.model.Response
+import domain.usecases.UseCase
 
 class SendResponse(private val gson: Gson): UseCase<String> {
     private var account: Account? = null

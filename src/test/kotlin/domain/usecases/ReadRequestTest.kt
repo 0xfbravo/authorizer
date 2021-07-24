@@ -2,12 +2,11 @@ package domain.usecases
 
 import com.google.gson.GsonBuilder
 import core.LocalDateTimeHandler
+import domain.usecases.utils.ReadRequest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 class ReadRequestTest {
 

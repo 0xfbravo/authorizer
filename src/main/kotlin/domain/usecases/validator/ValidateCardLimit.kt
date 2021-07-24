@@ -1,11 +1,11 @@
-package domain.usecases
+package domain.usecases.validator
 
 import domain.AccountCantBeNull
-import domain.CardNotActive
 import domain.InsufficientLimit
 import domain.TransactionCantBeNull
 import domain.model.Account
 import domain.model.Transaction
+import domain.usecases.UseCase
 
 class ValidateCardLimit: UseCase<Unit> {
     private var account: Account? = null

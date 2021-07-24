@@ -4,6 +4,7 @@ import data.repository.AccountRepository
 import domain.AccountAlreadyInitialized
 import domain.AccountCantBeNull
 import domain.model.Account
+import domain.usecases.account.CreateAccount
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.mockito.kotlin.doReturn

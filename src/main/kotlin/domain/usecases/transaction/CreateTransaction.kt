@@ -1,8 +1,11 @@
-package domain.usecases
+package domain.usecases.transaction
 
 import data.repository.TransactionRepository
 import domain.TransactionCantBeNull
 import domain.model.Transaction
+import domain.usecases.*
+import domain.usecases.account.GetCurrentAccount
+import domain.usecases.validator.*
 
 class CreateTransaction(private val repository: TransactionRepository,
                         private val getCurrentAccount: GetCurrentAccount,
@@ -10,7 +13,8 @@ class CreateTransaction(private val repository: TransactionRepository,
                         private val validateCardActivation: ValidateCardActivation,
                         private val validateCardLimit: ValidateCardLimit,
                         private val validateHighFrequency: ValidateHighFrequencySmallInterval,
-                        private val validateDoubleTransaction: ValidateDoubleTransaction): UseCase<Unit> {
+                        private val validateDoubleTransaction: ValidateDoubleTransaction
+): UseCase<Unit> {
     private var transaction: Transaction? = null
 
     override fun execute() {

@@ -1,4 +1,6 @@
-package domain.usecases
+package domain.usecases.validator
+
+import domain.usecases.UseCase
 
 class ValidateHighFrequencySmallInterval: UseCase<Boolean> {
     override fun execute(): Boolean {

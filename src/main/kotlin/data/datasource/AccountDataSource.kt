@@ -5,6 +5,7 @@ import domain.model.Account
 interface AccountDataSource {
     fun getCurrentAccount(): Account?
     fun addAccount(account: Account): Boolean
+    fun updateCurrentAccount(account: Account): Boolean
     fun containsAccount(): Boolean
 }
 
@@ -20,6 +21,11 @@ class AccountDataSourceImpl: AccountDataSource {
             return false
         }
         return dataSource.add(account)
+    }
+
+    override fun updateCurrentAccount(account: Account): Boolean {
+        dataSource.removeFirstOrNull()
+        return addAccount(account)
     }
 
     override fun containsAccount(): Boolean {

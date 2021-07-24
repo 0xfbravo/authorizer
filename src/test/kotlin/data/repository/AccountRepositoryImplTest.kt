@@ -33,6 +33,20 @@ class AccountRepositoryImplTest {
     }
 
     @Test
+    fun testUpdateCurrentAccount() {
+        val dataSource = mock<AccountDataSource> { on { updateCurrentAccount(account) } doReturn true }
+        val repository: AccountRepository = AccountRepositoryImpl(dataSource)
+        assert(repository.updateCurrentAccount(account))
+    }
+
+    @Test
+    fun testUpdateCurrentAccountError() {
+        val dataSource = mock<AccountDataSource> { on { updateCurrentAccount(account) } doReturn false }
+        val repository: AccountRepository = AccountRepositoryImpl(dataSource)
+        assertFalse(repository.updateCurrentAccount(account))
+    }
+
+    @Test
     fun testGetCurrentAccountError() {
         val dataSource = mock<AccountDataSource> { on { getCurrentAccount() } doReturn null }
         val repository: AccountRepository = AccountRepositoryImpl(dataSource)

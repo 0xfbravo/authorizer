@@ -1,7 +1,8 @@
-package domain.usecases
+package domain.usecases.utils
 
 import com.google.gson.Gson
 import domain.model.Request
+import domain.usecases.UseCase
 
 class ReadRequest(private val gson: Gson): UseCase<Request?> {
     private var requestString: String? = null
