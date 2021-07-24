@@ -1,9 +1,6 @@
 package domain.usecases.transaction
 
-import core.dataLayer
-import core.domainLayer
-import core.presentationLayer
-import core.utils
+import core.*
 import data.repository.AccountRepository
 import data.repository.TransactionRepository
 import domain.model.Account
@@ -25,6 +22,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import java.time.LocalDateTime
+import kotlin.test.assertFailsWith
 
 class CreateTransactionTest: KoinTest {
 
@@ -168,6 +166,41 @@ class CreateTransactionTest: KoinTest {
         assertEquals(response.violations.size, 2)
         assertEquals(response.violations[0], Violation.CardNotActive)
         assertEquals(response.violations[1], Violation.InsufficientLimit)
+    }
+
+    @Test
+    fun testCreateTransactionSuccess() {
+        val transactionsMax = 15
+        val merchants = listOf("Burger King", "Uber Eats")
+        val transactions = arrayListOf<Transaction>()
+        for (i in 1..transactionsMax) {
+            val transaction = Transaction(merchants.random(), i * 10, LocalDateTime.now().minusHours(i.toLong()))
+            transactions.add(transaction)
+        }
+
+        declare {
+            mock<AccountRepository> {
+                on { containsAccount() } doReturn true
+                on { getCurrentAccount() } doReturn activeCardHighLimit
+                on { updateCurrentAccount(any()) } doReturn true
+            }
+        }
+        declare {
+            mock<TransactionRepository> {
+                on { getTransactions(any()) } doReturn transactions
+            }
+        }
+
+        val transaction = Transaction("Vivara", 450, LocalDateTime.now())
+        val response = useCase.with(transaction).execute()
+        assertNotNull(response.account.activeCard)
+        assertNotNull(response.account.availableLimit)
+        assert(response.violations.isEmpty())
+    }
+
+    @Test
+    fun testCreateTransactionWithTransactionNull() {
+        assertFailsWith(TransactionCantBeNull::class) { useCase.execute() }
     }
 
 }
