@@ -3,13 +3,14 @@ package domain.usecases.account
 import core.AccountCantBeNull
 import data.repository.AccountRepository
 import domain.model.Account
+import domain.model.Response
 import domain.model.Violation
 import domain.usecases.UseCase
 
-class CreateAccount(private val repository: AccountRepository): UseCase<Violation?> {
+class CreateAccount(private val repository: AccountRepository): UseCase<Response> {
     private var account: Account? = null
 
-    override fun execute(): Violation? {
+    override fun execute(): Response {
         if (account == null) {
             throw AccountCantBeNull()
         }
@@ -17,10 +18,10 @@ class CreateAccount(private val repository: AccountRepository): UseCase<Violatio
         val isAccountCreated = repository.addAccount(account!!)
         if (!isAccountCreated) {
             val currentAccount = repository.getCurrentAccount()!!
-            return Violation.AccountAlreadyInitialized
+            return Response(currentAccount, listOf(Violation.AccountAlreadyInitialized))
         }
 
-        return null
+        return Response(account!!, listOf())
     }
 
     fun with(account: Account): CreateAccount {

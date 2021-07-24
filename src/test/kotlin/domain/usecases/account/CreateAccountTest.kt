@@ -41,14 +41,16 @@ class CreateAccountTest: KoinTest {
             }
         }
 
-        val violation = useCase.with(account).execute()
-        assertNotNull(violation)
-        assertEquals(violation, Violation.AccountAlreadyInitialized)
+        val response = useCase.with(account).execute()
+        assert(response.violations.isNotEmpty())
+        assertEquals(response.violations.first(), Violation.AccountAlreadyInitialized)
     }
 
     @Test
     fun testSuccessCreateAccount() {
-        useCase.with(account).execute()
+        val response = useCase.with(account).execute()
+        assert(response.violations.isEmpty())
+        assertEquals(response.account, account)
     }
 
 }

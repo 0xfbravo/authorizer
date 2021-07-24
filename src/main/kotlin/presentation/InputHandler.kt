@@ -28,7 +28,7 @@ class InputHandlerImpl(private val readRequest: ReadRequest,
 
     private fun startAccountCreation(account: Account) {
         val response = createAccount.with(account).execute()
-//        showResponseToUser(response)
+        showResponseToUser(response)
     }
 
     private fun startTransactionCreation(transaction: Transaction) {

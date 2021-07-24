@@ -19,6 +19,8 @@ import domain.usecases.utils.ReadRequest
 import domain.usecases.utils.ConvertResponse
 import domain.usecases.validator.*
 import org.koin.dsl.module
+import presentation.InputHandler
+import presentation.InputHandlerImpl
 import java.time.LocalDateTime
 
 val utils = module {
@@ -58,5 +60,5 @@ val domainLayer = module {
 }
 
 val presentationLayer = module {
-
+    single<InputHandler> { InputHandlerImpl(get(), get(), get(), get()) }
 }
