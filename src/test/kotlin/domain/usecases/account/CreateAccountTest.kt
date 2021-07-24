@@ -1,10 +1,9 @@
-package domain.usecases
+package domain.usecases.account
 
 import data.repository.AccountRepository
 import domain.AccountAlreadyInitialized
 import domain.AccountCantBeNull
 import domain.model.Account
-import domain.usecases.account.CreateAccount
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.mockito.kotlin.doReturn
@@ -23,7 +22,10 @@ class CreateAccountTest {
 
     @Test
     fun testAlreadyInitializedAccount() {
-        val repository = mock<AccountRepository> { on { addAccount(account) } doReturn false }
+        val repository = mock<AccountRepository> {
+            on { addAccount(account) } doReturn false
+            on { getCurrentAccount() } doReturn Account(true, 1000)
+        }
         val useCase = CreateAccount(repository)
         assertThrows(AccountAlreadyInitialized::class.java) { useCase.with(account).execute() }
     }

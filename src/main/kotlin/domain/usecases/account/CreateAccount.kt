@@ -16,7 +16,8 @@ class CreateAccount(private val repository: AccountRepository): UseCase<Unit> {
 
         val isAccountCreated = repository.addAccount(account!!)
         if (!isAccountCreated) {
-            throw AccountAlreadyInitialized()
+            val currentAccount = repository.getCurrentAccount()!!
+            throw AccountAlreadyInitialized(currentAccount)
         }
     }
 

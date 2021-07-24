@@ -1,9 +1,8 @@
-package domain.usecases
+package domain.usecases.account
 
 import data.repository.AccountRepository
 import domain.AccountNotInitialized
 import domain.model.Account
-import domain.usecases.account.GetCurrentAccount
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Test

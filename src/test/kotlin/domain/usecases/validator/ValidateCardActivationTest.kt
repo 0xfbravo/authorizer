@@ -1,9 +1,8 @@
-package domain.usecases
+package domain.usecases.validator
 
 import domain.AccountCantBeNull
 import domain.CardNotActive
 import domain.model.Account
-import domain.usecases.validator.ValidateCardActivation
 import org.junit.Assert.assertThrows
 import org.junit.Test
 

@@ -1,9 +1,11 @@
 package domain
 
+import domain.model.Account
+
 abstract class AbstractViolation(protected val type: String): Exception()
 
 // Violations
-class AccountAlreadyInitialized: AbstractViolation("account-already-initialized")
+class AccountAlreadyInitialized(val account: Account): AbstractViolation("account-already-initialized")
 class AccountNotInitialized: AbstractViolation("account-not-initialized")
 class CardNotActive: AbstractViolation("card-not-active")
 class InsufficientLimit: AbstractViolation("insufficient-limit")

@@ -1,8 +1,7 @@
-package domain.usecases
+package domain.usecases.utils
 
 import com.google.gson.GsonBuilder
 import core.LocalDateTimeHandler
-import domain.usecases.utils.ReadRequest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

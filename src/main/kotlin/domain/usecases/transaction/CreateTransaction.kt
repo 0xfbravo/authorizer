@@ -28,6 +28,7 @@ class CreateTransaction(private val repository: TransactionRepository,
         validateCardLimit.with(account, transaction!!).execute()
         validateHighFrequency.execute()
         validateDoubleTransaction.execute()
+        repository.addTransaction(transaction!!)
     }
 
     fun with(transaction: Transaction): CreateTransaction {
