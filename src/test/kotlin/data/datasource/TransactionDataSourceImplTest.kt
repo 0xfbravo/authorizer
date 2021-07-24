@@ -31,25 +31,23 @@ class TransactionDataSourceImplTest {
     }
 
     @Test
-    fun testGetAllTransactionsFromMerchant() {
-        val merchantToSearch = "Uber Eats"
+    fun testGetAllTransactions() {
         val merchants = listOf("Burger King", "Uber Eats")
         val transactionsMax = 10
         for (i in 1..transactionsMax) {
             val transaction = Transaction(merchants.random(), i, LocalDateTime.now())
             dataSource.addTransaction(transaction)
         }
-        assertFalse(dataSource.getTransactions(merchantToSearch).isEmpty())
+        assertFalse(dataSource.getTransactions().isEmpty())
     }
 
     @Test
-    fun testGetAllTransactionsFromMerchantWithEmptyResponse() {
-        assert(dataSource.getTransactions("Uber Eats").isEmpty())
+    fun testGetAllTransactionsWithEmptyResponse() {
+        assert(dataSource.getTransactions().isEmpty())
     }
 
     @Test(timeout = 5000)
-    fun testGetAllTransactionsFromMerchantWithHugeDataset() {
-        val merchantToSearch = "Pizza Da'skina"
+    fun testGetAllTransactionsWithHugeDataset() {
         val merchants = listOf("Burger King", "Uber Eats", "Mc Donald's", "Pizza Da'skina", "Outro")
         val transactionsMax = 3000000
         for (i in 1..transactionsMax) {
@@ -57,7 +55,7 @@ class TransactionDataSourceImplTest {
             assert(dataSource.addTransaction(transaction))
         }
         val totalTime = measureTimeMillis {
-            assertFalse(dataSource.getTransactions(merchantToSearch).isEmpty())
+            assertFalse(dataSource.getTransactions().isEmpty())
         }
         println("Huge dataset ($transactionsMax) search time: $totalTime ms")
     }

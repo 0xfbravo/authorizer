@@ -17,8 +17,8 @@ class ValidateDoubledTransaction(private val getTransactions: GetTransactions): 
             throw TransactionCantBeNull()
         }
 
-        val lastTransactionsFromMerchant = getTransactions.execute()
-        val doubleTransactions = lastTransactionsFromMerchant
+        val lastSucceededTransactions = getTransactions.execute()
+        val doubleTransactions = lastSucceededTransactions
             .filter { it.time.until(transaction!!.time, ChronoUnit.MINUTES) <= maxInterval }
             .filter { it.merchant == transaction!!.merchant && it.amount == transaction!!.amount }
         val isDoubleTransactionViolated = doubleTransactions.isNotEmpty()
