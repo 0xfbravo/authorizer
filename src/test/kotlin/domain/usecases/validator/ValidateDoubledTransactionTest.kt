@@ -16,7 +16,7 @@ import org.mockito.kotlin.mock
 import java.time.LocalDateTime
 import kotlin.test.assertFailsWith
 
-class ValidateDoubleTransactionTest: KoinTest {
+class ValidateDoubledTransactionTest: KoinTest {
 
     private val merchant = "Burger King"
     private val amount = 200
@@ -28,13 +28,13 @@ class ValidateDoubleTransactionTest: KoinTest {
 
     @Test
     fun validateDoubleTransactionNullTransaction() {
-        val useCase by inject<ValidateDoubleTransaction>()
+        val useCase by inject<ValidateDoubledTransaction>()
         assertFailsWith(TransactionCantBeNull::class) { useCase.execute() }
     }
 
     @Test
     fun validateDoubleTransactionSuccess() {
-        val useCase by inject<ValidateDoubleTransaction>()
+        val useCase by inject<ValidateDoubledTransaction>()
         val transaction = Transaction(merchant, amount, LocalDateTime.now())
         val violation = useCase.with(transaction).execute()
         assertNull(violation)
@@ -49,13 +49,13 @@ class ValidateDoubleTransactionTest: KoinTest {
             transactions.add(transaction)
         }
 
-        declare { mock<TransactionRepository> { on { getTransactions(merchant) } doReturn transactions } }
-        val useCase by inject<ValidateDoubleTransaction>()
+        declare { mock<TransactionRepository> { on { getTransactions() } doReturn transactions } }
+        val useCase by inject<ValidateDoubledTransaction>()
         val transaction = Transaction(merchant, amount, LocalDateTime.now())
 
         val violation = useCase.with(transaction).execute()
         assertNotNull(violation)
-        assertEquals(Violation.DoubleTransaction, violation)
+        assertEquals(Violation.DoubledTransaction, violation)
     }
 
 }

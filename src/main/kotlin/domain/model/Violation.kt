@@ -13,6 +13,6 @@ enum class Violation {
     InsufficientLimit,
     @SerializedName("high-frequency-small-interval")
     HighFrequencySmallInterval,
-    @SerializedName("double-transaction")
-    DoubleTransaction
+    @SerializedName("doubled-transaction")
+    DoubledTransaction
 }

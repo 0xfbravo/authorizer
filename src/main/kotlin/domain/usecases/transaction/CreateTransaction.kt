@@ -17,7 +17,7 @@ class CreateTransaction(private val repository: TransactionRepository,
                         private val validateCardActivation: ValidateCardActivation,
                         private val validateCardLimit: ValidateCardLimit,
                         private val validateHighFrequency: ValidateHighFrequencySmallInterval,
-                        private val validateDoubleTransaction: ValidateDoubleTransaction,
+                        private val validateDoubledTransaction: ValidateDoubledTransaction,
                         private val updateCurrentAccount: UpdateCurrentAccount
 ): UseCase<Response> {
     private var transaction: Transaction? = null
@@ -40,7 +40,7 @@ class CreateTransaction(private val repository: TransactionRepository,
             validateCardActivation.with(account).execute()?.let { violations.add(it) }
             validateCardLimit.with(account, transaction!!).execute()?.let { violations.add(it) }
             validateHighFrequency.with(transaction!!).execute()?.let { violations.add(it) }
-            validateDoubleTransaction.with(transaction!!).execute()?.let { violations.add(it) }
+            validateDoubledTransaction.with(transaction!!).execute()?.let { violations.add(it) }
 
             // Update card limit
             if (violations.isEmpty()) {

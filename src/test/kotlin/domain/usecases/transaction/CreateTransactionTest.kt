@@ -113,7 +113,7 @@ class CreateTransactionTest: KoinTest {
     }
 
     @Test
-    fun testCreateTransactionDoubleTransactionViolation() {
+    fun testCreateTransactionDoubledTransactionViolation() {
         val transactionsMax = 2
         val transactions = arrayListOf<Transaction>()
         for (i in 1..transactionsMax) {
@@ -130,7 +130,7 @@ class CreateTransactionTest: KoinTest {
         }
         declare {
             mock<TransactionRepository> {
-                on { getTransactions(any()) } doReturn transactions
+                on { getTransactions() } doReturn transactions
             }
         }
 
@@ -140,7 +140,7 @@ class CreateTransactionTest: KoinTest {
         assertNotNull(response.account.availableLimit)
 
         assert(response.violations.isNotEmpty())
-        assertEquals(Violation.DoubleTransaction, response.violations.first())
+        assertEquals(Violation.DoubledTransaction, response.violations.first())
     }
 
     @Test

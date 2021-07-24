@@ -40,7 +40,7 @@ class ConvertResponseTest: KoinTest {
 
     @Test
     fun testSendResponseValidAccountWithViolations() {
-        val response = Response(account, listOf(Violation.HighFrequencySmallInterval, Violation.DoubleTransaction))
+        val response = Response(account, listOf(Violation.HighFrequencySmallInterval, Violation.DoubledTransaction))
         val responseJson = useCase.with(response).execute()
         println(responseJson)
     }
