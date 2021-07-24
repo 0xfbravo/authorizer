@@ -16,7 +16,7 @@ import domain.usecases.account.UpdateCurrentAccount
 import domain.usecases.transaction.CreateTransaction
 import domain.usecases.transaction.GetTransactions
 import domain.usecases.utils.ReadRequest
-import domain.usecases.utils.SendResponse
+import domain.usecases.utils.ConvertResponse
 import domain.usecases.validator.*
 import org.koin.dsl.module
 import java.time.LocalDateTime
@@ -54,7 +54,7 @@ val domainLayer = module {
     single { ValidateHighFrequencySmallInterval(get()) }
     // Utils
     single { ReadRequest(get()) }
-    single { SendResponse(get()) }
+    single { ConvertResponse(get()) }
 }
 
 val presentationLayer = module {
