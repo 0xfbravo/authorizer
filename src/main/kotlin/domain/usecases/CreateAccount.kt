@@ -13,8 +13,8 @@ class CreateAccount(private val repository: AccountRepository): UseCase<Unit> {
             throw AccountCantBeNull()
         }
 
-        val accountWasAdded = repository.addAccount(account!!)
-        if (!accountWasAdded) {
+        val isAccountCreated = repository.addAccount(account!!)
+        if (!isAccountCreated) {
             throw AccountAlreadyInitialized()
         }
     }

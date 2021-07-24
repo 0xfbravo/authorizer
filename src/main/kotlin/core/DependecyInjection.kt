@@ -37,7 +37,7 @@ val domainLayer = module {
     single { CreateTransaction() }
     single { GetLastTransactions() }
     single { ReadRequest(get()) }
-    single { ValidateAccountInitialization() }
+    single { ValidateAccountInitialization(get()) }
     single { ValidateCardActivation() }
     single { ValidateCardLimit() }
     single { ValidateDoubleTransaction() }

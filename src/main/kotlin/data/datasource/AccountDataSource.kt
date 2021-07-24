@@ -23,7 +23,7 @@ class AccountDataSourceImpl: AccountDataSource {
     }
 
     override fun containsAccount(): Boolean {
-        return dataSource.size == 1
+        return getCurrentAccount() != null
     }
 
 }
