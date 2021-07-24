@@ -2,10 +2,10 @@ package core
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import data.datasource.AccountDatasource
-import data.datasource.AccountDatasourceImpl
-import data.datasource.TransactionDatasource
-import data.datasource.TransactionDatasourceImpl
+import data.datasource.AccountDataSource
+import data.datasource.AccountDataSourceImpl
+import data.datasource.TransactionDataSource
+import data.datasource.TransactionDataSourceImpl
 import data.repository.AccountRepository
 import data.repository.AccountRepositoryImpl
 import data.repository.TransactionRepository
@@ -23,12 +23,12 @@ val utils = module {
 
 val dataLayer = module {
     // Datasource
-    single<AccountDatasource> { AccountDatasourceImpl() }
-    single<TransactionDatasource> { TransactionDatasourceImpl() }
+    single<AccountDataSource> { AccountDataSourceImpl() }
+    single<TransactionDataSource> { TransactionDataSourceImpl() }
 
     // Repository
-    single<AccountRepository> { AccountRepositoryImpl() }
-    single<TransactionRepository> { TransactionRepositoryImpl() }
+    single<AccountRepository> { AccountRepositoryImpl(get()) }
+    single<TransactionRepository> { TransactionRepositoryImpl(get()) }
 }
 
 val domainLayer = module {

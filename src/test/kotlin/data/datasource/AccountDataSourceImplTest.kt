@@ -6,33 +6,35 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
+import kotlin.test.assertNotNull
 
-class AccountDatasourceImplTest {
-    private lateinit var datasource: AccountDatasource
+class AccountDataSourceImplTest {
+    private lateinit var dataSource: AccountDataSource
 
     @Before
     fun init() {
-        datasource = AccountDatasourceImpl()
+        dataSource = AccountDataSourceImpl()
     }
 
     @Test
     fun testAddAccount() {
         val account = Account(true, 199)
-        assert(datasource.addAccount(account))
+        assert(dataSource.addAccount(account))
     }
 
     @Test
     fun testDatasourceContainsAccount() {
         val account = Account(false, 10)
-        datasource.addAccount(account)
-        assert(datasource.containsAccount())
+        dataSource.addAccount(account)
+        assert(dataSource.containsAccount())
     }
 
     @Test
     fun testGetCurrentAccount() {
         val account = Account(false, 10)
-        datasource.addAccount(account)
-        val currentAccount = datasource.getCurrentAccount()
+        dataSource.addAccount(account)
+        val currentAccount = dataSource.getCurrentAccount()
+        assertNotNull(currentAccount)
         assertEquals(currentAccount.activeCard, account.activeCard)
         assertEquals(currentAccount.availableLimit, account.availableLimit)
     }
@@ -41,9 +43,10 @@ class AccountDatasourceImplTest {
     fun testAddTwoAccounts() {
         val fistAccount = Account(false, 10)
         val secondAccount = Account(true, 300)
-        assert(datasource.addAccount(fistAccount))
-        assertFalse(datasource.addAccount(secondAccount))
-        val currentAccount = datasource.getCurrentAccount()
+        assert(dataSource.addAccount(fistAccount))
+        assertFalse(dataSource.addAccount(secondAccount))
+        val currentAccount = dataSource.getCurrentAccount()
+        assertNotNull(currentAccount)
         assertEquals(currentAccount.activeCard, fistAccount.activeCard)
         assertEquals(currentAccount.availableLimit, fistAccount.availableLimit)
         assertNotEquals(currentAccount.activeCard, secondAccount.activeCard)

@@ -2,25 +2,25 @@ package data.datasource
 
 import domain.model.Transaction
 
-interface TransactionDatasource {
+interface TransactionDataSource {
     fun getTransactions(): List<Transaction>
     fun getTransactions(fromMerchant: String): List<Transaction>
     fun addTransaction(newTransaction: Transaction): Boolean
 }
 
-class TransactionDatasourceImpl: TransactionDatasource {
-    private val datasource: HashSet<Transaction> = hashSetOf()
+class TransactionDataSourceImpl: TransactionDataSource {
+    private val dataSource: HashSet<Transaction> = hashSetOf()
 
     override fun getTransactions(): List<Transaction> {
-        return datasource.toList()
+        return dataSource.toList()
     }
 
     override fun getTransactions(fromMerchant: String): List<Transaction> {
-        return datasource.filter { it.merchant == fromMerchant }.toList()
+        return dataSource.filter { it.merchant == fromMerchant }.toList()
     }
 
     override fun addTransaction(newTransaction: Transaction): Boolean {
-        return datasource.add(newTransaction)
+        return dataSource.add(newTransaction)
     }
 
 }
