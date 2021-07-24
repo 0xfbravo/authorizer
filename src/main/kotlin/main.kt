@@ -3,16 +3,16 @@ import core.domainLayer
 import core.presentationLayer
 import core.utils
 import org.koin.core.context.startKoin
+import presentation.AuthorizerFacade
 
 fun main(args: Array<String>) {
     // Setups dependency injection
     startKoin {
-        // Koin Logger
-        printLogger()
-        // Modules
         modules(utils, dataLayer, domainLayer, presentationLayer)
     }
 
     // Does the magic! ~
-    println("Hello World!")
+    val operations = generateSequence(::readLine)
+    val authorizer = AuthorizerFacade(operations)
+    authorizer.start()
 }
