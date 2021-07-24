@@ -100,7 +100,7 @@ class CreateTransactionTest: KoinTest {
         }
         declare {
             mock<TransactionRepository> {
-                on { getTransactions(any()) } doReturn transactions
+                on { getTransactions() } doReturn transactions
             }
         }
 

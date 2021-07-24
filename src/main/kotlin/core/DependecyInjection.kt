@@ -15,6 +15,7 @@ import domain.usecases.account.GetCurrentAccount
 import domain.usecases.account.UpdateCurrentAccount
 import domain.usecases.transaction.CreateTransaction
 import domain.usecases.transaction.GetTransactions
+import domain.usecases.transaction.GetTransactionsFromMerchant
 import domain.usecases.utils.ConvertResponse
 import domain.usecases.utils.ReadRequest
 import domain.usecases.validator.*
@@ -48,6 +49,7 @@ val domainLayer = module {
     // Transaction use cases
     single { CreateTransaction(get(), get(), get(), get(), get(), get(), get(), get()) }
     single { GetTransactions(get()) }
+    single { GetTransactionsFromMerchant(get()) }
     // Validator use cases
     single { ValidateAccountInitialization(get()) }
     single { ValidateCardActivation() }

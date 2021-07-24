@@ -49,7 +49,7 @@ class ValidateHighFrequencySmallIntervalTest: KoinTest {
             transactions.add(transaction)
         }
 
-        declare { mock<TransactionRepository> { on { getTransactions(merchant) } doReturn transactions } }
+        declare { mock<TransactionRepository> { on { getTransactions() } doReturn transactions } }
         val useCase by inject<ValidateHighFrequencySmallInterval>()
         val transaction = Transaction(merchant, amount, LocalDateTime.now())
 

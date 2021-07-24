@@ -1,9 +1,6 @@
 package domain.usecases.transaction
 
-import core.dataLayer
-import core.domainLayer
-import core.presentationLayer
-import core.utils
+import core.*
 import data.repository.TransactionRepository
 import domain.model.Transaction
 import org.junit.Before
@@ -13,12 +10,14 @@ import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import org.koin.test.inject
 import org.koin.test.mock.declare
+import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import java.time.LocalDateTime
+import kotlin.test.assertFailsWith
 
-class GetTransactionsTest: KoinTest {
-
+class GetTransactionsFromMerchantTest: KoinTest {
+    private val merchantToSearch = "Burger King"
     private var transactions = arrayListOf<Transaction>()
 
     @get:Rule
@@ -38,18 +37,24 @@ class GetTransactionsTest: KoinTest {
     }
 
     @Test
-    fun testGetAllTransactions() {
+    fun testGetAllTransactionsFromMerchantWithMerchantNull() {
         declare { mock<TransactionRepository> { on { getTransactions() } doReturn transactions } }
-        val useCase by inject<GetTransactions>()
-        val lastTransactions = useCase.execute()
-        assert(lastTransactions.isNotEmpty())
+        val useCase by inject<GetTransactionsFromMerchant>()
+        assertFailsWith(MerchantCantBeNull::class) { useCase.execute() }
     }
 
     @Test
-    fun testGetAllTransactionsWithEmptyResponse() {
-        val useCase by inject<GetTransactions>()
-        val lastTransactions = useCase.execute()
-        assert(lastTransactions.isEmpty())
+    fun testGetAllTransactionsWithMerchant() {
+        declare { mock<TransactionRepository> { on { getTransactions(any()) } doReturn transactions } }
+        val useCase by inject<GetTransactionsFromMerchant>()
+        val merchantTransactions = useCase.with(merchantToSearch).execute()
+        assert(merchantTransactions.isNotEmpty())
     }
 
+    @Test
+    fun testGetAllTransactionsWithMerchantWithEmptyResponse() {
+        val useCase by inject<GetTransactionsFromMerchant>()
+        val merchantTransactions = useCase.with(merchantToSearch).execute()
+        assert(merchantTransactions.isEmpty())
+    }
 }
