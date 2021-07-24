@@ -3,12 +3,12 @@ package domain.usecases.validator
 import core.*
 import domain.model.Account
 import domain.model.Violation
-import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import org.koin.test.inject
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -39,7 +39,7 @@ class ValidateCardActivationTest: KoinTest {
         val account = Account(false, 1200)
         val violation = useCase.with(account).execute()
         assertNotNull(violation)
-        Assert.assertEquals(violation, Violation.CardNotActive)
+        assertEquals(Violation.CardNotActive, violation)
     }
 
 }

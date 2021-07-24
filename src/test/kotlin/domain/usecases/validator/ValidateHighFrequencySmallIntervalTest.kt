@@ -7,8 +7,6 @@ import domain.model.Violation
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
-import org.koin.core.context.loadKoinModules
-import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import org.koin.test.inject
@@ -57,7 +55,7 @@ class ValidateHighFrequencySmallIntervalTest: KoinTest {
 
         val violation = useCase.with(transaction).execute()
         assertNotNull(violation)
-        assertEquals(violation, Violation.HighFrequencySmallInterval)
+        assertEquals(Violation.HighFrequencySmallInterval, violation)
     }
 
 }

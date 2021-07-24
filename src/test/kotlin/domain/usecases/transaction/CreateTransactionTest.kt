@@ -7,13 +7,8 @@ import domain.model.Account
 import domain.model.Transaction
 import domain.model.Violation
 import org.junit.Assert.*
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.core.context.loadKoinModules
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import org.koin.test.inject
@@ -48,7 +43,7 @@ class CreateTransactionTest: KoinTest {
         assertNull(response.account.activeCard)
         assertNull(response.account.availableLimit)
         assert(response.violations.isNotEmpty())
-        assertEquals(response.violations.first(), Violation.AccountNotInitialized)
+        assertEquals(Violation.AccountNotInitialized, response.violations.first())
     }
 
     @Test
@@ -66,7 +61,7 @@ class CreateTransactionTest: KoinTest {
         assertNotNull(response.account.availableLimit)
 
         assert(response.violations.isNotEmpty())
-        assertEquals(response.violations.first(), Violation.CardNotActive)
+        assertEquals(Violation.CardNotActive, response.violations.first())
     }
 
     @Test
@@ -84,7 +79,7 @@ class CreateTransactionTest: KoinTest {
         assertNotNull(response.account.availableLimit)
 
         assert(response.violations.isNotEmpty())
-        assertEquals(response.violations.first(), Violation.InsufficientLimit)
+        assertEquals(Violation.InsufficientLimit, response.violations.first())
     }
 
     @Test
@@ -114,7 +109,7 @@ class CreateTransactionTest: KoinTest {
         assertNotNull(response.account.availableLimit)
 
         assert(response.violations.isNotEmpty())
-        assertEquals(response.violations.first(), Violation.HighFrequencySmallInterval)
+        assertEquals(Violation.HighFrequencySmallInterval, response.violations.first())
     }
 
     @Test
@@ -145,7 +140,7 @@ class CreateTransactionTest: KoinTest {
         assertNotNull(response.account.availableLimit)
 
         assert(response.violations.isNotEmpty())
-        assertEquals(response.violations.first(), Violation.DoubleTransaction)
+        assertEquals(Violation.DoubleTransaction, response.violations.first())
     }
 
     @Test
@@ -163,9 +158,9 @@ class CreateTransactionTest: KoinTest {
         assertNotNull(response.account.availableLimit)
 
         assert(response.violations.isNotEmpty())
-        assertEquals(response.violations.size, 2)
-        assertEquals(response.violations[0], Violation.CardNotActive)
-        assertEquals(response.violations[1], Violation.InsufficientLimit)
+        assertEquals(2, response.violations.size)
+        assertEquals(Violation.CardNotActive, response.violations[0])
+        assertEquals(Violation.InsufficientLimit, response.violations[1])
     }
 
     @Test
@@ -195,6 +190,7 @@ class CreateTransactionTest: KoinTest {
         val response = useCase.with(transaction).execute()
         assertNotNull(response.account.activeCard)
         assertNotNull(response.account.availableLimit)
+        assertEquals(activeCardHighLimit.availableLimit?.minus(450), response.account.availableLimit)
         assert(response.violations.isEmpty())
     }
 

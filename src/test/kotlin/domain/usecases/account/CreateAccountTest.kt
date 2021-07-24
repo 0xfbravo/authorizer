@@ -14,7 +14,6 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.assertNotNull
 
 class CreateAccountTest: KoinTest {
 
@@ -43,14 +42,14 @@ class CreateAccountTest: KoinTest {
 
         val response = useCase.with(account).execute()
         assert(response.violations.isNotEmpty())
-        assertEquals(response.violations.first(), Violation.AccountAlreadyInitialized)
+        assertEquals(Violation.AccountAlreadyInitialized, response.violations.first())
     }
 
     @Test
     fun testSuccessCreateAccount() {
         val response = useCase.with(account).execute()
         assert(response.violations.isEmpty())
-        assertEquals(response.account, account)
+        assertEquals(account, response.account)
     }
 
 }

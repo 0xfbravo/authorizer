@@ -6,7 +6,6 @@ import core.presentationLayer
 import core.utils
 import data.repository.AccountRepository
 import domain.model.Violation
-import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
@@ -15,6 +14,7 @@ import org.koin.test.inject
 import org.koin.test.mock.declare
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -31,7 +31,7 @@ class ValidateAccountInitializationTest: KoinTest {
         val useCase by inject<ValidateAccountInitialization>()
         val violation = useCase.execute()
         assertNotNull(violation)
-        Assert.assertEquals(violation, Violation.AccountNotInitialized)
+        assertEquals(Violation.AccountNotInitialized, violation)
     }
 
     @Test

@@ -43,11 +43,11 @@ class CreateTransaction(private val repository: TransactionRepository,
             validateDoubleTransaction.with(transaction!!).execute()?.let { violations.add(it) }
 
             // Update card limit
-            if (violations.isNotEmpty()) {
-                repository.addTransaction(transaction!!)
+            if (violations.isEmpty()) {
                 val newLimit = account.availableLimit!! - transaction!!.amount
                 val updatedAccount = account.copy(activeCard = account.activeCard, availableLimit = newLimit)
                 updateCurrentAccount.with(updatedAccount).execute()
+                repository.addTransaction(transaction!!)
                 Response(updatedAccount, violations)
             } else {
                 Response(account, violations)

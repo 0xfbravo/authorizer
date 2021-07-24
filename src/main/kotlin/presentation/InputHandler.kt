@@ -5,8 +5,8 @@ import domain.model.Response
 import domain.model.Transaction
 import domain.usecases.account.CreateAccount
 import domain.usecases.transaction.CreateTransaction
-import domain.usecases.utils.ReadRequest
 import domain.usecases.utils.ConvertResponse
+import domain.usecases.utils.ReadRequest
 
 interface InputHandler {
     fun readUserInput(userInput: String)

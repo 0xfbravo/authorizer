@@ -7,7 +7,6 @@ import core.utils
 import org.junit.Rule
 import org.junit.Test
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import org.koin.test.KoinTestRule
 
 class AuthorizerFacadeTest: KoinComponent {

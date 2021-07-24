@@ -41,7 +41,7 @@ class ValidateCardLimitTest: KoinTest {
         val transaction = Transaction("Burger King", 200, LocalDateTime.now())
         val violation = useCase.with(account, transaction).execute()
         assertNotNull(violation)
-        assertEquals(violation, Violation.InsufficientLimit)
+        assertEquals(Violation.InsufficientLimit, violation)
     }
 
 }

@@ -1,6 +1,9 @@
 package domain.usecases.utils
 
-import core.*
+import core.dataLayer
+import core.domainLayer
+import core.presentationLayer
+import core.utils
 import domain.model.Account
 import domain.model.Response
 import domain.model.Violation
@@ -9,7 +12,6 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import org.koin.test.inject
-import kotlin.test.assertFailsWith
 
 class ConvertResponseTest: KoinTest {
 

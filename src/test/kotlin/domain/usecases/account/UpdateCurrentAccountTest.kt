@@ -5,8 +5,6 @@ import data.repository.AccountRepository
 import domain.model.Account
 import org.junit.Rule
 import org.junit.Test
-import org.koin.core.context.loadKoinModules
-import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import org.koin.test.inject

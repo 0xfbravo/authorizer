@@ -71,9 +71,9 @@ class ReadRequestTest: KoinTest {
         assertNotNull(transaction?.merchant)
         assertNotNull(transaction?.amount)
         assertNotNull(transaction?.time)
-        assertEquals(transaction?.merchant, "Burger King")
-        assertEquals(transaction?.amount, 20)
-        assertEquals(transaction?.time, LocalDateTime.of(2019, 2, 13,10, 0, 0, 0))
+        assertEquals("Burger King", transaction?.merchant)
+        assertEquals(20, transaction?.amount)
+        assertEquals(LocalDateTime.of(2019, 2, 13,10, 0, 0, 0), transaction?.time)
     }
 
 }
