@@ -69,6 +69,7 @@ tasks.named<Jar>("jar") {
     from(configurations.runtimeClasspath.get()
         .onEach { println("Adding dependency: ${it.name}") }
         .map { if (it.isDirectory) it else zipTree(it) })
+    exclude("**/module-info.class")
     val sourcesMain = sourceSets.main.get()
     sourcesMain.allSource.forEach { println("Adding source code: ${it.name}") }
     from(sourcesMain.output)

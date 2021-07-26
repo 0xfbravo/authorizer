@@ -6,7 +6,7 @@ import core.presentationLayer
 import core.utils
 import org.koin.core.context.startKoin
 
-fun main(args: Array<String>) {
+fun main() {
     // Setups dependency injection
     startKoin {
         modules(utils, dataLayer, domainLayer, presentationLayer)
@@ -15,7 +15,5 @@ fun main(args: Array<String>) {
     // Does the magic! ~
     val authorizer = AuthorizerFacade()
     val operations = generateSequence(::readLine)
-    if (operations.toList().isNotEmpty()) {
-        authorizer.process(operations)
-    }
+    authorizer.process(operations)
 }
