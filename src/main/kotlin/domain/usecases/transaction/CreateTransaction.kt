@@ -35,26 +35,22 @@ class CreateTransaction(private val repository: TransactionRepository,
 
         // Validate more business logic
         val violations = arrayListOf<Violation>()
-        return try {
-            val account = getCurrentAccount.execute()!!
-            validateCardActivation.with(account).execute()?.let { violations.add(it) }
-            validateCardLimit.with(account, transaction!!).execute()?.let { violations.add(it) }
-            validateHighFrequency.with(transaction!!).execute()?.let { violations.add(it) }
-            validateDoubledTransaction.with(transaction!!).execute()?.let { violations.add(it) }
+        var account = getCurrentAccount.execute()!!
+        validateCardActivation.with(account).execute()?.let { violations.add(it) }
+        validateCardLimit.with(account, transaction!!).execute()?.let { violations.add(it) }
+        validateHighFrequency.with(transaction!!).execute()?.let { violations.add(it) }
+        validateDoubledTransaction.with(transaction!!).execute()?.let { violations.add(it) }
 
-            // Update card limit
-            if (violations.isEmpty()) {
-                val newLimit = account.availableLimit!! - transaction!!.amount
-                val updatedAccount = account.copy(activeCard = account.activeCard, availableLimit = newLimit)
-                updateCurrentAccount.with(updatedAccount).execute()
-                repository.addTransaction(transaction!!)
-                Response(updatedAccount, violations)
-            } else {
-                Response(account, violations)
-            }
-        } catch (exception: Exception) {
-            Response(Account(), listOf())
+        // Update card limit
+        if (violations.isEmpty()) {
+            val newLimit = account.availableLimit!! - transaction!!.amount
+            account = account.copy(activeCard = account.activeCard, availableLimit = newLimit)
+            updateCurrentAccount.with(account).execute()
+            repository.addTransaction(transaction!!)
         }
+
+        return Response(account, violations)
+
     }
 
     fun with(transaction: Transaction): CreateTransaction {

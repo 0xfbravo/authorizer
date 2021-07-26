@@ -12,6 +12,7 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import org.koin.test.inject
+import kotlin.test.assertNull
 
 class ConvertResponseTest: KoinTest {
 
@@ -25,28 +26,34 @@ class ConvertResponseTest: KoinTest {
     }
 
     @Test
-    fun testSendResponseValidAccountNoViolations() {
+    fun testConvertResponseWithNullResponse() {
+        val responseJson = useCase.execute()
+        assertNull(responseJson)
+    }
+
+    @Test
+    fun testConvertResponseValidAccountNoViolations() {
         val response = Response(account, violations)
         val responseJson = useCase.with(response).execute()
         println(responseJson)
     }
 
     @Test
-    fun testSendResponseValidAccountNullViolations() {
+    fun testConvertResponseValidAccountNullViolations() {
         val response = Response(account, listOf())
         val responseJson = useCase.with(response).execute()
         println(responseJson)
     }
 
     @Test
-    fun testSendResponseValidAccountWithViolations() {
+    fun testConvertResponseValidAccountWithViolations() {
         val response = Response(account, listOf(Violation.HighFrequencySmallInterval, Violation.DoubledTransaction))
         val responseJson = useCase.with(response).execute()
         println(responseJson)
     }
 
     @Test
-    fun testSendResponseInvalidAccount() {
+    fun testConvertResponseInvalidAccount() {
         val response = Response(Account(), listOf(Violation.AccountNotInitialized))
         val responseJson = useCase.with(response).execute()
         println(responseJson)

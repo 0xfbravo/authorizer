@@ -19,6 +19,7 @@ e o binário compilado ficará disponível em: `build/libs/authorizer.jar`
 
 ### Bibliotecas externas
 
+- Jacoco: pq? para facilitar a geração e visualização de reports de cobertura
 - Koin: pq? injeção de dependências
 - Kotlinx Json: pq? para tratar request e response JSON
 - Kotlinx Datetime: pq? para tratar tempo de maneira mais fácil com integração do Kotlinx JSON

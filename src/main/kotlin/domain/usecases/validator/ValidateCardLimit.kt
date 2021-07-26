@@ -1,6 +1,7 @@
 package domain.usecases.validator
 
 import core.AccountCantBeNull
+import core.AccountLimitCantBeNull
 import core.TransactionCantBeNull
 import domain.model.Account
 import domain.model.Transaction
@@ -12,23 +13,22 @@ class ValidateCardLimit: UseCase<Violation?> {
     private var transaction: Transaction? = null
 
     override fun execute(): Violation? {
-        if (account == null || account?.availableLimit == null) {
-            throw AccountCantBeNull()
+        when {
+            account == null -> throw AccountCantBeNull()
+            account!!.availableLimit == null -> throw AccountLimitCantBeNull()
+            transaction == null -> throw TransactionCantBeNull()
+            else -> {
+                val availableLimit = account!!.availableLimit!!
+                if (availableLimit < transaction!!.amount) {
+                    return Violation.InsufficientLimit
+                }
+                return null
+            }
         }
 
-        if (transaction == null) {
-            throw TransactionCantBeNull()
-        }
-
-        val availableLimit = account!!.availableLimit!!
-        if (availableLimit < transaction!!.amount) {
-            return Violation.InsufficientLimit
-        }
-
-        return null
     }
 
-    fun with(account: Account, transaction: Transaction): ValidateCardLimit {
+    fun with(account: Account?, transaction: Transaction?): ValidateCardLimit {
         this.account = account
         this.transaction = transaction
         return this

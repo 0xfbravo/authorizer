@@ -6,6 +6,8 @@ import data.repository.TransactionRepository
 import domain.model.Account
 import domain.model.Transaction
 import domain.model.Violation
+import domain.usecases.account.GetCurrentAccount
+import domain.usecases.account.UpdateCurrentAccount
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
@@ -15,6 +17,7 @@ import org.koin.test.inject
 import org.koin.test.mock.declare
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.mock
 import java.time.LocalDateTime
 import kotlin.test.assertFailsWith
@@ -40,7 +43,6 @@ class CreateTransactionTest: KoinTest {
         }
 
         val response = useCase.with(transaction).execute()
-        assertNull(response.account.activeCard)
         assertNull(response.account.availableLimit)
         assert(response.violations.isNotEmpty())
         assertEquals(Violation.AccountNotInitialized, response.violations.first())

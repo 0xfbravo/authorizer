@@ -12,6 +12,7 @@ plugins {
     kotlin("jvm") version "1.4.32"
     kotlin("plugin.serialization") version "1.5.20"
     application
+    jacoco
 }
 
 repositories {
@@ -32,6 +33,26 @@ dependencies {
 
 tasks.test {
     useJUnit()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(false)
+        csv.required.set(true)
+        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+    }
+}
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = "0.9".toBigDecimal()
+            }
+        }
+    }
 }
 
 tasks.withType<KotlinCompile>() {
@@ -54,5 +75,5 @@ tasks.named<Jar>("jar") {
 }
 
 application {
-    mainClass.set("MainKt")
+    mainClass.set("presentation.MainKt")
 }

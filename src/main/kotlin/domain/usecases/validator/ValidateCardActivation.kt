@@ -9,11 +9,11 @@ class ValidateCardActivation: UseCase<Violation?> {
     private var account: Account? = null
 
     override fun execute(): Violation? {
-        if (account == null || account?.activeCard == null) {
+        if (account == null) {
             throw AccountCantBeNull()
         }
 
-        if (!account!!.activeCard!!) {
+        if (!account!!.activeCard) {
             return Violation.CardNotActive
         }
 

@@ -10,6 +10,7 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import org.koin.test.inject
+import org.mockito.kotlin.any
 import java.time.LocalDateTime
 import kotlin.test.assertFailsWith
 
@@ -25,6 +26,17 @@ class ValidateCardLimitTest: KoinTest {
     @Test
     fun testNullAccount() {
         assertFailsWith(AccountCantBeNull::class) { useCase.execute() }
+    }
+
+    @Test
+    fun testValidAccountWithNullLimit() {
+        assertFailsWith(AccountLimitCantBeNull::class) { useCase.with(Account(), null).execute() }
+    }
+
+    @Test
+    fun testValidAccountWithNullTransaction() {
+        val account = Account(true, 1200)
+        assertFailsWith(TransactionCantBeNull::class) { useCase.with(account, null).execute() }
     }
 
     @Test

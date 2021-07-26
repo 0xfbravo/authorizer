@@ -11,11 +11,7 @@ class ConvertResponse(private val gson: Gson): UseCase<String?> {
         if (response == null) {
             return null
         }
-        return try {
-            gson.toJson(response)
-        } catch (exception: Exception) {
-            null
-        }
+        return gson.toJson(response)
     }
 
     fun with(response: Response): ConvertResponse {
