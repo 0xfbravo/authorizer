@@ -19,6 +19,8 @@ e o binário compilado ficará disponível em: `build/libs/authorizer.jar`
 
 ### Bibliotecas externas
 
+- JUnit: pq? para fazer testes
+- Mockito: pq? para fazer mocks e facilitar a criação de caso de testes
 - Jacoco: pq? para facilitar a geração e visualização de reports de cobertura
 - Koin: pq? injeção de dependências
 - Kotlinx Json: pq? para tratar request e response JSON
