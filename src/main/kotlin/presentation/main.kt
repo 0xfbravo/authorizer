@@ -15,5 +15,7 @@ fun main(args: Array<String>) {
     // Does the magic! ~
     val authorizer = AuthorizerFacade()
     val operations = generateSequence(::readLine)
-    authorizer.process(operations)
+    if (operations.toList().isNotEmpty()) {
+        authorizer.process(operations)
+    }
 }
