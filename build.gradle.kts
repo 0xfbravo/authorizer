@@ -38,6 +38,21 @@ tasks.withType<KotlinCompile>() {
     kotlinOptions.jvmTarget = jvmTarget
 }
 
+tasks.named<Jar>("jar") {
+    archiveFileName.set("authorizer.jar")
+    manifest {
+        attributes["Implementation-Title"] = "Authorizer"
+        attributes["Implementation-Version"] = archiveVersion
+        attributes["Main-Class"] = "presentation.MainKt"
+    }
+    from(configurations.runtimeClasspath.get()
+        .onEach { println("Adding dependency: ${it.name}") }
+        .map { if (it.isDirectory) it else zipTree(it) })
+    val sourcesMain = sourceSets.main.get()
+    sourcesMain.allSource.forEach { println("Adding source code: ${it.name}") }
+    from(sourcesMain.output)
+}
+
 application {
     mainClass.set("MainKt")
 }

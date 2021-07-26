@@ -1,8 +1,24 @@
 # Authorizer
 
+### Sobre
+
 - Princípios SOLID: pq? Melhor divisão de responsabilidades e redução de boilerplate code
 - Clean Arch: pq? Melhor divisão de responsabilidades entre camadas
 - Hashset para buscas de transações: pq? O(1)
+
+### Compilação
+Como o projeto está em Kotlin geraremos um binário `.jar` para a execução multiplataforma.
+
+Para gerar o binário, caminhe via linha de comando até a pasta do projeto.
+
+Dado que o terminal está na raíz do projeto, execute o comando `./gradlew jar`
+e o binário compilado ficará disponível em: `build/libs/authorizer.jar`
+
+### Execução
+
+
+### Bibliotecas externas
+
 - Koin: pq? injeção de dependências
 - Kotlinx Json: pq? para tratar request e response JSON
 - Kotlinx Datetime: pq? para tratar tempo de maneira mais fácil com integração do Kotlinx JSON
