@@ -60,7 +60,7 @@ tasks.withType<KotlinCompile>() {
 }
 
 tasks.named<Jar>("jar") {
-    archiveFileName.set("authorizer.jar")
+    archiveFileName.set("authorize.jar")
     manifest {
         attributes["Implementation-Title"] = "Authorizer"
         attributes["Implementation-Version"] = archiveVersion
