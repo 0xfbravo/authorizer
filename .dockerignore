@@ -1,0 +1,5 @@
+*.md
+build/
+.gradle/
+.idea/
+bin/
