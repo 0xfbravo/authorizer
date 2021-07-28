@@ -1,14 +1,19 @@
-ARG binary=authorize.jar
-ARG openJdkVersion=11
-ARG operationsFile=operations
+ARG appHome=/usr/app/
+ARG openJdkVersion=latest
 
-FROM openjdk:${openJdkVersion} AS build
-RUN mkdir authorizer
-COPY . /authorizer
-WORKDIR /authorizer
-RUN ./gradlew jar --no-daemon
+FROM openjdk:$openJdkVersion AS TEMP_BUILD_IMAGE
+WORKDIR $appHome
+COPY build.gradle.kts settings.gradle.kts gradlew $appHome
+COPY gradle $appHome/gradle
+RUN ./gradlew jar || return 0
+COPY . .
+RUN ./gradlew jar
 
-FROM build AS run
-COPY ${operationsFile} /authorizer
-WORKDIR /authorizer
-CMD java -jar /src/build/libs/${binary} < ${operationsFile}
+FROM openjdk:$openJdkVersion
+ENV binary=authorize.jar
+ENV operationsFile=operations
+COPY . $appHome
+WORKDIR $appHome
+COPY --from=TEMP_BUILD_IMAGE $appHome/build/libs/$binary .
+EXPOSE 8080
+CMD java -jar $binary < $operationsFile
