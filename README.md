@@ -1,9 +1,8 @@
 # Authorizer
 
-### Sobre
-
+## Sobre
 Esse projeto é um autorizador de operações que trabalha diretamente via `stdin`
-com um arquivo de operações descritas linha por linha.
+com um arquivo `operations` de operações descritas linha por linha.
 
 O projeto foi estruturado obedecendo os prinícipios `S.O.L.I.D.` a fim de melhorar a divisão
 de responsabilidades  e redução de boilerplate code.
@@ -18,8 +17,8 @@ em média de `O(1)`.
 
 ---
 
-### Compilação
-#### Manual
+## Compilação
+### Manual
 Como o projeto está em `Kotlin` geraremos um binário `.jar` para a execução multiplataforma.
 
 Para gerar o binário, caminhe via linha de comando até a pasta do projeto.
@@ -28,8 +27,7 @@ Dado que o terminal está na raíz do projeto, execute o comando `./gradlew jar`
 e o binário compilado ficará disponível em: `build/libs/authorizer.jar`.
 
 
-#### Docker
-
+### Docker
 Também existe a possibilidade de rodar o projeto de forma containerizada
 através do `Docker`.
 
@@ -40,7 +38,7 @@ e uma imagem docker será criada com a tag `authorizer`.
 
 ---
 
-### Testes
+## Testes
 Para a exeução dos testes do projeto, caminhe via linha de comando até a pasta do projeto.
 
 Dado que o terminal está na raíz do projeto, execute o comando `./gradlew test`.
@@ -53,18 +51,28 @@ facilitar a importação em outras plataformas.
 
 ---
 
-### Execução
-#### Manual
+## Execução
+### Manual
+Para a execução manual, caminhe via caminhe via linha de comando até a pasta do projeto.
 
-#### Docker
+Dado que o terminal está na raíz do projeto, execute o comando `java -jar build/libs/authorizer.jar < operations`
+onde `operations` é o arquivo de operações.
+
+### Docker
+Para a execução via Docker, caminhe via caminhe via linha de comando até a pasta do projeto.
+
+Dado que o terminal está na raíz do projeto, execute o comando `docker run authorizer`
+e a imagem ficará responsável pela execução dos comandos necessários.
 
 ---
 
-### Bibliotecas externas
+## Bibliotecas externas
 
-- JUnit: pq? para fazer testes
-- Mockito: pq? para fazer mocks e facilitar a criação de caso de testes
-- Jacoco: pq? para facilitar a geração e visualização de reports de cobertura
-- Koin: pq? injeção de dependências
-- Kotlinx Json: pq? para tratar request e response JSON
-- Kotlinx Datetime: pq? para tratar tempo de maneira mais fácil com integração do Kotlinx JSON
+Para facilitar o desenvolvimento algumas bibliotecas open-source foram utilizadas,
+segue abaixo a lista de bibliotecas e suas devidas justificativas.
+
+- **JUnit4** - Biblioteca utilizada para realização dos testes do projeto.
+- **Jacoco** - Biblioteca utilizada para facilitar a geração e visualização de reports de cobertura do projeto.
+- **Mockito** (3.2.0) - Biblioteca utilizada para fazer mocks e facilitar a criação de caso de testes.
+- **Koin** (3.1.2) - Biblioteca utilizada para gerenciar a injeção de dependências do projeto.
+- **GSON** (2.8.7) - Biblioteca utilizada para tratar `request` e `response` JSON utilizados na aplicação.
